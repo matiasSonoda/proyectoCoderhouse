@@ -89,14 +89,14 @@ cartRoutes.put("/:cid", async (req, res) => {
                     let prodIndex2 = productsArray.findIndex(p=>p.id_prod===cart.products.id_prod)
                     productsArray.splice(prodIndex2,1)
                     cart.products.push(productsArray)
-                    cart.save()
+                    await cart.save()
                     return
                 } else {
                     const newProd = { quantity: product.quantity, id_prod: product.id_prod };
                     cart.products.push(newProd);
+                    await cart.save();
                 }
             });
-            await cart.save();
             res.status(200).send(`Carrito actualizado: ${cid}`);
         } else {
             res.status(404).send(`No se encontró el carrito: ${cid}`);
