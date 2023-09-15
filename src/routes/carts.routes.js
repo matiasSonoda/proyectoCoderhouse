@@ -76,31 +76,30 @@ cartRoutes.delete("/:cid/products/:pid", async(req,res)=>{
     }
 })
 
-cartRoutes.put("/:cid", async (req, res)=>{
-    const{cid} = req.params
-    let {quantity,id_prod} = req.body
-    const cart = await cartsModel.findById(cid)
-    try{
-        if (cart){
-            let prodIndex = await cart.products.findIndex(product=>product.id_prod.toString()===id_prod)
-            if(prodIndex>-1){
-                cart.products[prodIndex].quantity += quantity
-            }
-            else{
-                const newProd = {quantity, id_prod}
-                cart.products.push(newProd)
-            }
-            await cart.save()
-            res.status(200).send(`Carrito actualizado: ${cid}`)
-            }
-        else{
-            res.status(404).send(`No se encontro el carrito: ${cid}`)
+cartRoutes.put("/:cid", async (req, res) => {
+    const { cid } = req.params;
+    const productsArray = req.body;
+    const cart = await cartsModel.findById(cid);
+    try {
+        if (cart) {
+            productsArray.forEach(async (product) => {
+                let prodIndex = cart.products.findIndex(p => p.id_prod.toString() === product.id_prod);
+                if (prodIndex > -1) {
+                    cart.products[prodIndex].quantity += product.quantity;
+                } else {
+                    const newProd = { quantity: product.quantity, id_prod: product.id_prod };
+                    cart.products.push(newProd);
+                }
+            });
+            await cart.save();
+            res.status(200).send(`Carrito actualizado: ${cid}`);
+        } else {
+            res.status(404).send(`No se encontró el carrito: ${cid}`);
         }
+    } catch (error) {
+        res.status(400).send(`Error: ${error}`);
     }
-    catch(error){
-        res.status(400).send(`Error: ${error}`)
-    }
-})
+});
 
 cartRoutes.put("/:cid/products/:pid", async(req,res)=>{
     let {quantity}= req.body
