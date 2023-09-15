@@ -86,7 +86,7 @@ cartRoutes.put("/:cid", async (req, res) => {
                 let prodIndex = cart.products.findIndex(p => p.id_prod.toString() === product.id_prod);
                 if (prodIndex > -1) {
                     cart.products[prodIndex].quantity += product.quantity;
-                    let prodIndex2 = productsArray.findIndex(p=>p.id_prod.toString()===cart.products.id_prod.toString())
+                    let prodIndex2 = productsArray.findIndex(p=>p.id_prod===cart.products.id_prod.toString())
                     productsArray.splice(prodIndex2,1)
                     cart.products.push(productsArray)
                     cart.save()
