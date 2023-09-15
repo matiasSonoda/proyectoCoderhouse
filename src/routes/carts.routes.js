@@ -79,7 +79,6 @@ cartRoutes.delete("/:cid/products/:pid", async(req,res)=>{
 cartRoutes.put("/:cid", async (req, res) => {
     const { cid } = req.params;
     const productsArray = req.body;
-    const alternativa = req.body;
     const cart = await cartsModel.findById(cid);
     try {
         if (cart) {
@@ -87,17 +86,12 @@ cartRoutes.put("/:cid", async (req, res) => {
                 let prodIndex = cart.products.findIndex(p => p.id_prod.toString() === product.id_prod);
                 if (prodIndex > -1) {
                     cart.products[prodIndex].quantity += product.quantity;
-                    let prodIndex2 = alternativa.findIndex(p=>p.id_prod===cart.products.id_prod.toString())
-                    alternativa.splice(prodIndex2,1)
-                    cart.products.push(alternativa)
-                    await cart.save()
-                    return
                 } else {
                     const newProd = { quantity: product.quantity, id_prod: product.id_prod };
                     cart.products.push(newProd);
-                    await cart.save();
                 }
             });
+            await cart.save();
             res.status(200).send(`Carrito actualizado: ${cid}`);
         } else {
             res.status(404).send(`No se encontró el carrito: ${cid}`);
