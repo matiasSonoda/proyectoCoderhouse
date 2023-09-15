@@ -87,7 +87,7 @@ cartRoutes.put("/:cid", async (req, res) => {
                 if (prodIndex > -1) {
                     cart.products[prodIndex].quantity += product.quantity;
                 } else {
-                    const newProd = { quantity: product.quantity, id_prod: product.id_prod };
+                    const newProd = { productsArray};
                     cart.products.push(newProd);
                 }
             });

@@ -9,7 +9,7 @@ productRouter.get("/", async(req, res)=>{
         if (category) {
             filter.category = category;
         }
-        const prods = await productModel.paginate(filter,{limit : limit, page:page, sort: {price: sort} } )
+        const prods = await productModel.paginate(filter,{limit : limit || 10, page:page, sort: {price: sort} } )
         res.status(200).send({resultado: "Ok", message: prods})
     }
     catch(error){
