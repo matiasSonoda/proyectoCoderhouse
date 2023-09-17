@@ -43,7 +43,11 @@ app.get("/session",(req, res)=>{
         res.send("Hola, por primera vez")
     }
 })
-
+app.get("/logout",(req,res)=>{
+    req.session.destroy(()=>{
+        res.send("Salio de la sesion")
+    })
+})
 //Cookies
 app.get("/setcookie",(req,res)=>{
     res.cookie("CookieCookie","Esto es el valor de una cookie",{maxAge:60000,signed:true}).send("Cookie creada")
