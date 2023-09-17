@@ -4,10 +4,12 @@ import productRouter from "./routes/products.routes.js";
 import mongoose from "mongoose";
 import cartRoutes from "./routes/carts.routes.js";
 import cartsModel from "./models/carts.model.js";
+import cookieParser from "cookie-parser";
 
 const app= express()
 const PORT= 4000;
 
+//BDD
 mongoose.connect(process.env.MONGO_URL)
 .then(async ()=> {
 console.log("BDD conectada")
@@ -19,9 +21,20 @@ console.log("BDD conectada")
 
 .catch((error)=>console.log("error de conexion mongoDb Atlas: " ,error))
 
+//middlewares
 app.use(express.json())
+app.use(cookieParser())
+//routes
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
+//Cookies
+app.get("/setcookie",(req,res)=>{
+    res.cookie("CookieCookie","Esto es el valor de una cookie").send("Cookie creada")
+})
+app.get("/getcookie",(req,res)=>{
+    res.send(req.cookies)
+})
+//server
 app.listen(PORT,()=>{
     console.log(`server on ${PORT}`)
 })
