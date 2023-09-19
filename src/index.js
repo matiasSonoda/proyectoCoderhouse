@@ -22,12 +22,12 @@ console.log("BDD conectada")
 )
 
 .catch((error)=>console.log("error de conexion mongoDb Atlas: " ,error))
-//Hnadlebars
+/*//Hnadlebars
 app.engine(".hbs", hbs({
     defaultLayout:"default",
     extname:".hbs"
 }))
-app.set("vie engine",".hbs")
+app.set("vie engine",".hbs")*/
 //middlewares
 app.use(express.json())
 app.use(cookieParser(process.env.SIGNED_COOKIE))
