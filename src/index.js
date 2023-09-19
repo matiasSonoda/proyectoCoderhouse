@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import cartRoutes from "./routes/carts.routes.js";
 import cartsModel from "./models/carts.model.js";
 import cookieParser from "cookie-parser";
+import { engine } from "express-handlebars";
 
 const app= express()
 const PORT= 4000;
@@ -21,7 +22,12 @@ console.log("BDD conectada")
 )
 
 .catch((error)=>console.log("error de conexion mongoDb Atlas: " ,error))
-
+//Hnadlebars
+app.engine(".hbs", hbs({
+    defaultLayout:"default",
+    extname:".hbs"
+}))
+app.set("vie engine",".hbs")
 //middlewares
 app.use(express.json())
 app.use(cookieParser(process.env.SIGNED_COOKIE))
@@ -33,6 +39,7 @@ app.use(session({
 //routes
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
+app.use("/api/sessions")
 //SESSION
 app.get("/session",(req, res)=>{
     if(req.session.counter){
