@@ -5,6 +5,7 @@ const sessionsRouter= Router()
 
 sessionsRouter.get("/login", async(req,res)=>{
     const {email, passowrd}=req.body
+    try{
     if(email==="admin@admin.com" && passowrd==="admin")
     {
         req.session.email=email
@@ -12,6 +13,10 @@ sessionsRouter.get("/login", async(req,res)=>{
         return res.status(200).send("usuario logueado")
     }
     return res.status(400).send("Login fallido")
+    }
+    catch(error){
+        res.status(400).send(error)
+    }
 })
 
 sessionsRouter.post("register")
