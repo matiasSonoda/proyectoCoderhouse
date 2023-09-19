@@ -3,7 +3,7 @@ import sessionsModel from "../models/sessions.model.js";
 
 const sessionsRouter= Router()
 
-sessionsRouter.get("Login", async(req,res)=>{
+sessionsRouter.get("/Login", async(req,res)=>{
     const {email, passowrd}=req.body
     if(email==="admin@admin.com" && passowrd==="admin")
     {
@@ -15,3 +15,5 @@ sessionsRouter.get("Login", async(req,res)=>{
 })
 
 sessionsRouter.post("register")
+
+export default sessionsRouter
