@@ -1,5 +1,17 @@
 import { Router } from "express";
-import userModel from "../models/users.model.js";
+import sessionsModel from "../models/sessions.model.js";
 
-userRouter= Router()
+const sessionsRouter= Router()
 
+sessionsRouter.get("Login", async(req,res)=>{
+    const {email, passowrd}=req.body
+    if(email==="admin@admin.com" && passowrd==="admin")
+    {
+        req.session.email=email
+        req.session.passowrd=passowrd
+        return res.status(200).send("usuario logueado")
+    }
+    return res.status(400).send("Login fallido")
+})
+
+sessionsRouter.post("register")
