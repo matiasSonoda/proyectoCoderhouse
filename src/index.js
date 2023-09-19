@@ -7,6 +7,7 @@ import cartRoutes from "./routes/carts.routes.js";
 import cartsModel from "./models/carts.model.js";
 import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
+import sessionRouter from "./routes/sessions.routes.js"
 
 const app= express()
 const PORT= 4000;
@@ -39,7 +40,7 @@ app.use(session({
 //routes
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
-app.use("/api/sessions")
+app.use("/api/sessions", sessionRouter)
 //SESSION
 app.get("/session",(req, res)=>{
     if(req.session.counter){
