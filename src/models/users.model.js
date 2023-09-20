@@ -1,6 +1,6 @@
 import { Schema,model } from "mongoose";    
 
-const sessionsSchema = new Schema({
+const usersSchema = new Schema({
     first_name:{
         require:true,
         type:String
@@ -24,5 +24,5 @@ const sessionsSchema = new Schema({
     }
 })
 
-const sessionsModel = model("users", sessionsSchema)
-export default sessionsModel
+const usersModel = model("users", usersSchema)
+export default usersModel

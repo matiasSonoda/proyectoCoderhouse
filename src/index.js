@@ -12,7 +12,13 @@ import MongoStore from "connect-mongo";
 const app= express()
 const PORT= 4000;
 
-
+mongoose.connect(process.env.MONGO_URL)
+.then(()=>{
+    console.log("DB conectada")
+})
+.catch((error)=>{
+    console.log(error)
+})
 /*//Hnadlebars
 app.engine(".hbs", hbs({
     defaultLayout:"default",

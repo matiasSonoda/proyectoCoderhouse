@@ -1,25 +1,15 @@
 import { Router } from "express";
-import sessionsModel from "../models/sessions.model.js";
+import usersModel from "../models/users.model.js";
 
 const sessionsRouter= Router()
 
-sessionsRouter.post("/",async(req,res)=>{
-    const {first_name, last_name, email, password, age}= req.body
-    try{
-        const response = await sessionsModel.create({first_name,last_name,email,age,password})
-        res.status(200).send({mensaje:"Usuario creado ",respuesta: response})
-    }
-    catch(error){
-        res.status(400).send(error)
-    }
-})
 sessionsRouter.post("/login", async(req,res)=>{
     const {email, password}=req.body
     try{
         if(req.session.login){
             res.status(200).send({resultado: "Login ya existente", message: user})
         }
-        const user= await sessionsModel.findOne({email:email})
+        const user= await usersModel.findOne({email:email})
         if (user){
             if(user.password === password)
             {
@@ -59,6 +49,5 @@ sessionsRouter.get("/admin",auth,  async(req,res)=>{
     res.send("sos admin")
 })
 
-sessionsRouter.post("register")
 
 export default sessionsRouter
