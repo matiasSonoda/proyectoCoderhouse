@@ -8,21 +8,11 @@ import cartsModel from "./models/carts.model.js";
 import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
 import sessionRouter from "./routes/sessions.routes.js"
-
+import MongoStore from "connect-mongo";
 const app= express()
 const PORT= 4000;
 
-//BDD
-mongoose.connect(process.env.MONGO_URL)
-.then(async ()=> {
-console.log("BDD conectada")
-//await cartsModel.create({})
-//const cart = await cartsModel.findOne({_id:"64fbe6651e9b3f2c80598459"}).populate("products.id_prod")
-//console.log(JSON.stringify(cart))
-}
-)
 
-.catch((error)=>console.log("error de conexion mongoDb Atlas: " ,error))
 /*//Hnadlebars
 app.engine(".hbs", hbs({
     defaultLayout:"default",
@@ -33,16 +23,22 @@ app.set("vie engine",".hbs")*/
 app.use(express.json())
 app.use(cookieParser(process.env.SIGNED_COOKIE))
 app.use(session({
+    store: MongoStore.create({
+        mongoUrl:process.env.MONGO_URL,
+        mongoOptions:{useNewUrlParse:true,useUnifiedTpology:true},
+        ttl:90//segundos
+    }),
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
 }))
+
 //routes
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
 app.use("/api/sessions", sessionRouter)
 //SESSION
-app.get("/session",(req, res)=>{
+/*app.get("/session",(req, res)=>{
     if(req.session.counter){
         req.session.counter++
         res.send(`Has entrado ${req.session.counter} veces`)
@@ -50,7 +46,7 @@ app.get("/session",(req, res)=>{
         req.session.counter=1
         res.send("Hola, por primera vez")
     }
-})
+})*/
 app.get("/logout",(req,res)=>{
     req.session.destroy(()=>{
         res.send("Salio de la sesion")
