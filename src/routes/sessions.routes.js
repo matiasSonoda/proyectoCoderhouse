@@ -6,9 +6,24 @@ const sessionsRouter= Router()
 sessionsRouter.get("/login", async(req,res)=>{
     const {email, password}=req.body
     try{
-        req.session.email=email
-        req.session.password=password
-        return res.send("usuario logueado")
+        if(req.session.login){
+            res.status(200).send({resultado: "Login ya existente", message: user})
+        }
+        const user= await sessionsModel.find({email:email})
+        if (user){
+            if(user.password === password)
+            {
+                req.session.login=true
+                res.status(200).send({resultado: "Login valido", message: user})
+            }
+            else
+            {
+                res.status(401).send({resultado: "Contraseña no valida", message: user})
+            }
+        return res.send("usuario logueado")}
+        else{
+            res.status(404).send({resultado: "not found", message: user})
+        }
     }
     catch(error){
         res.status(400).send(error)
