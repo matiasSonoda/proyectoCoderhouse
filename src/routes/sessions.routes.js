@@ -7,7 +7,7 @@ sessionsRouter.post("/login", async(req,res)=>{
     const {email, password}=req.body
     try{
         if(req.session.login){
-            res.status(200).send({resultado: "Login ya existente", message: user})
+            res.status(200).send({resultado: "Login ya existente"})
         }
         const user= await usersModel.findOne({email:email})
         if (user){

@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import session from "express-session";
 import "dotenv/config"
 import productRouter from "./routes/products.routes.js";
@@ -9,6 +9,8 @@ import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
 import sessionRouter from "./routes/sessions.routes.js"
 import MongoStore from "connect-mongo";
+import usersRouter from "./routes/users.routes.js";
+import exphbs from 'express-handlebars';
 const app= express()
 const PORT= 4000;
 
@@ -19,14 +21,13 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((error)=>{
     console.log(error)
 })
-/*//Hnadlebars
-app.engine(".hbs", hbs({
-    defaultLayout:"default",
-    extname:".hbs"
-}))
-app.set("vie engine",".hbs")*/
+//Handlebars
+app.engine("handlebars", engine())
+app.set("view engine","handlebars")
+
 //middlewares
 app.use(express.json())
+app.use(urlencoded({extended:true}))
 app.use(cookieParser(process.env.SIGNED_COOKIE))
 app.use(session({
     store: MongoStore.create({
@@ -42,6 +43,7 @@ app.use(session({
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
 app.use("/api/sessions", sessionRouter)
+app.use("/api/users", usersRouter)
 //SESSION
 /*app.get("/session",(req, res)=>{
     if(req.session.counter){
