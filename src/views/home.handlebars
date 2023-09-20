@@ -1,2 +1,23 @@
-<h1>Hola mundo</h1>
-{{>saludo}}
+ <h1>Agregar nuevo producto</h1>
+  <form action="/api/products" method="POST">
+    <label for="title">Título:</label><br>
+    <input type="text" id="title" name="title" required><br>
+    <label for="description">Descripción:</label><br>
+    <input type="text" id="description" name="description" required><br>
+    <label for="price">Precio:</label><br>
+    <input type="number" id="price" name="price" required><br>
+    <label for="stock">Stock:</label><br>
+    <input type="number" id="stock" name="stock" required><br>
+    <label for="category">Categoría:</label><br>
+    <input type="text" id="category" name="category" required><br>
+    <label for="status">Estado:</label><br>
+    <input type="checkbox" id="status" name="status"><br>
+    <label for="code">Código:</label><br>
+    <input type="text" id="code" name="code" required><br>
+    <input type="submit" value="Agregar producto">
+  </form>
+
+  <h1>Productos guardados</h1>
+  <ul id="product-list">
+    <!-- Aquí se mostrarán los productos guardados en la base de datos -->
+  </ul>

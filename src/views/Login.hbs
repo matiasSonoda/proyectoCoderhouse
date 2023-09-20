@@ -1,7 +1,7 @@
-<form method="post">
-    <input type="email"name="email" value=""placeholder="Tu email">
-    <br><br>
-    <input type="password"name="password"value=""placeholder="Tu contraseña">
-    <br><br>
-    <input type="submit"value="Login">
+<form action="/api/users/login" method="POST">
+  <label for="email">Correo electrónico:</label><br>
+  <input type="email" id="email" name="email" required><br>
+  <label for="password">Contraseña:</label><br>
+  <input type="password" id="password" name="password" required><br>
+  <input type="submit" value="Iniciar sesión">
 </form>

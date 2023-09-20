@@ -10,7 +10,9 @@ import { engine } from "express-handlebars";
 import sessionRouter from "./routes/sessions.routes.js"
 import MongoStore from "connect-mongo";
 import usersRouter from "./routes/users.routes.js";
-import exphbs from 'express-handlebars';
+import __dirname from "./utils.js";
+import * as path from "path"
+import viewsRouter from "./routes/views.routes.js";
 const app= express()
 const PORT= 4000;
 
@@ -24,6 +26,33 @@ mongoose.connect(process.env.MONGO_URL)
 //Handlebars
 app.engine("handlebars", engine())
 app.set("view engine","handlebars")
+app.set("views", path.resolve(__dirname+"/views"))
+
+//Archivos estaticos
+app.use( "/",express.static(__dirname+"/public"))
+const products=[
+    {
+        nombre:"pablo",
+        apellido:"gonzalez"
+    },
+    {
+        nombre:"martin",
+        apellido:"gerez"
+    },
+    {
+        nombre:"matias",
+        apellido:"ramirez"
+    }
+]
+
+
+app.get("/",(req,res)=>{
+    res.render("home",{
+        title:"backend | handlebars",
+        admin: true,
+        products:products
+})
+})
 
 //middlewares
 app.use(express.json())
@@ -40,6 +69,7 @@ app.use(session({
 }))
 
 //routes
+app.use("/static", viewsRouter )
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
 app.use("/api/sessions", sessionRouter)
@@ -54,11 +84,6 @@ app.use("/api/users", usersRouter)
         res.send("Hola, por primera vez")
     }
 })*/
-app.get("/logout",(req,res)=>{
-    req.session.destroy(()=>{
-        res.send("Salio de la sesion")
-    })
-})
 //Cookies
 app.get("/setcookie",(req,res)=>{
     res.cookie("CookieCookie","Esto es el valor de una cookie",{maxAge:60000,signed:true}).send("Cookie creada")
