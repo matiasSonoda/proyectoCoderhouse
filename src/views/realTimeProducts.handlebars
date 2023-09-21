@@ -1,0 +1,44 @@
+<h1>Crear nuevo producto</h1>
+<main>
+<form id="formProduct">
+    <label for="title">title</label>
+    <input type="text" name="title" required>
+
+    <label for="description">Description</label>
+    <input type="text"name="description" required>
+
+    <label for="category">category</label>
+    <input type="text"name="category" required>
+
+    <label for="price">Price</label>
+    <input type="number"name="price" required>
+
+    <label for="stock">Stock</label>
+    <input type="number"name="stock" required>
+
+    <label for="code">Code</label>
+    <input type="text"name="code" required>
+
+    <label for="status">Status</label>
+    <input type="checkbox"name="status" required>
+
+    <button type="submit">Crear producto</button>
+
+</form>
+<div id="products-container">
+    {{#each products}}
+    <div>
+                <p>ID:{{this.id}}</p>
+                <p>Titulo:{{this.title}}</p>
+                <p>Descripcion:{{this.description}}</p>
+                <p>Precio:{{this.price}}</p>
+                <p>status:{{this.status}}</p>
+                <p>code:{{this.code}}</p>
+                <p>stock:{{this.stock}}</p>
+    </div>
+
+{{/each}}
+</div>
+
+
+</main>
