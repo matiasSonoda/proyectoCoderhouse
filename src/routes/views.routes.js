@@ -43,7 +43,7 @@ viewsRouter.post('/login', async (req, res) => {
       res.status(500).send(error);
     }
   });
-viewsRouter.get("/signin",async(req,res)=>{
+/*viewsRouter.get("/signin",async(req,res)=>{
   res.render("signin")
 })
 viewsRouter.post('/signin', async (req, res) => {
@@ -54,6 +54,6 @@ viewsRouter.post('/signin', async (req, res) => {
     } catch (error) {
       res.status(500).send(error);
     }
-  });
+  });*/
 
   export default viewsRouter

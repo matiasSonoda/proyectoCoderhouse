@@ -3,7 +3,10 @@ import usersModel from "../models/users.model.js";
 
 const usersRouter = Router()
 
-usersRouter.post("/",async(req,res)=>{
+usersRouter.get("/signin",async(req,res)=>{
+    res.render("signin")
+  })
+usersRouter.post("/signin",async(req,res)=>{
     const {first_name, last_name, email, password, age}= req.body
     try{
         const response = await usersModel.create({first_name,last_name,email,age,password})
