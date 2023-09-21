@@ -3,9 +3,15 @@ import usersModel from "../models/users.model.js";
 
 const sessionsRouter= Router()
 
+
+sessionsRouter.get("/login",async (req,res)=>{
+    res.render("login")
+})
 sessionsRouter.post("/login", async(req,res)=>{
     const {email, password}=req.body
     try{
+        if (email === "adminCoder@coder.om" && password==="adminCod3r123")
+            res.redirect("/static/realTimeProducts")
         if(req.session.login){
             res.status(200).send({resultado: "Login ya existente"})
         }
@@ -14,7 +20,7 @@ sessionsRouter.post("/login", async(req,res)=>{
             if(user.password === password)
             {
                 req.session.login=true
-                res.status(200).send({resultado: "Login valido", message: user})
+                res.redirect('/api/products');
             }
             else
             {
@@ -45,9 +51,5 @@ async  function  auth(req,res,next){
         console.log(error)
     }
 }
-sessionsRouter.get("/admin",auth,  async(req,res)=>{
-    res.send("sos admin")
-})
-
 
 export default sessionsRouter

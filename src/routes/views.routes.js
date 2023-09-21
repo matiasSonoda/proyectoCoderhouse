@@ -24,11 +24,7 @@ viewsRouter.get("/home", async(req,res)=>{
         info,
     })
 })
-
-viewsRouter.get('/login', async(req, res) => {
-  res.render('login');})
-
-viewsRouter.post('/login', async (req, res) => {
+/*viewsRouter.post('/login', async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
@@ -42,7 +38,7 @@ viewsRouter.post('/login', async (req, res) => {
     } catch (error) {
       res.status(500).send(error);
     }
-  });
+  });*/
 /*viewsRouter.get("/signin",async(req,res)=>{
   res.render("signin")
 })
