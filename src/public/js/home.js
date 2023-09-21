@@ -1,2 +1,2 @@
-let name= document.getElementById("nameId")
-
+let name = document.getElementById("nameId").innerText;
+console.log(`Hola, ${name}!`);

@@ -19,6 +19,7 @@ const productRouter= Router();
 */
 productRouter.get("/", async(req, res) => {
     const {limit, page, sort, category} = req.query
+    const name= req.sessions.first_name
     try {
       let filter = {};
         if (category) {
@@ -29,7 +30,7 @@ productRouter.get("/", async(req, res) => {
                 sort: {price:sort|| "asc"} 
             }
             const products = await productModel.paginate(filter,options)
-            res.render("home",{products:products.docs})
+            res.render("home",{products:products.docs, name})
     } catch (error) {
       res.status(500).send({ error: `Error al obtener productos: ${error}` });
     }
