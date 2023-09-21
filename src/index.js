@@ -69,8 +69,8 @@ app.use(session({
         ttl:90//segundos
     }),
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false    
 }))
 
 //routes
