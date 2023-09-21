@@ -24,13 +24,17 @@ viewsRouter.get("/home", async(req,res)=>{
         info,
     })
 })
+
+viewsRouter.get('/login', async(req, res) => {
+  res.render('login');})
+
 viewsRouter.post('/login', async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res.status(400).send('Usuario no encontrado');
       }
-      if (user.password !== req.body.password) { // En un caso real, nunca debes almacenar contraseñas en texto plano
+      if (user.password !== req.body.password) { 
         return res.status(400).send('Contraseña incorrecta');
       }
       req.session.user = user; // Guarda el usuario en la sesión
@@ -39,7 +43,10 @@ viewsRouter.post('/login', async (req, res) => {
       res.status(500).send(error);
     }
   });
-viewsRouter.post('/sign_in', async (req, res) => {
+viewsRouter.get("/signin",async(req,res)=>{
+  res.render("signin")
+})
+viewsRouter.post('/signin', async (req, res) => {
     try {
       const newUser = new User(req.body);
       await newUser.save();

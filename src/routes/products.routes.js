@@ -2,7 +2,7 @@ import { Router } from "express";
 import productModel from "../models/products.model.js";
 const productRouter= Router();
 
-productRouter.get("/", async(req, res)=>{
+/*productRouter.get("/", async(req, res)=>{
     const {limit, page, sort, category} = req.query
     try{
         let filter = {};
@@ -16,6 +16,21 @@ productRouter.get("/", async(req, res)=>{
         res.status(400).send({error:`error al consultar productos: ${error}`})
     }
 })
+*/
+productRouter.get("/", async(req, res) => {
+    const {limit, page, sort, category} = req.query
+    try {
+      
+      const products = await productModel.find().lean(); // Obtiene todos los productos
+      let filter = {};
+        if (category) {
+            filter.category = category;}
+            const prods = await productModel.paginate(filter,{limit : limit || 10, page:page, sort: {price: sort} } )     
+      res.render('realTimeProducts', { products }); // Renderiza la vista 'products' con los productos
+    } catch (error) {
+      res.status(500).send({ error: `Error al obtener productos: ${error}` });
+    }
+  });
 
 productRouter.get("/:id", async(req, res)=>{
     const {id} = req.params
