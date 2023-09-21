@@ -74,6 +74,7 @@ app.use(session({
 }))
 
 //routes
+app.use(express.static('public'));
 app.use("/static", viewsRouter )
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)

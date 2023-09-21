@@ -5,7 +5,9 @@ const sessionsRouter= Router()
 
 
 sessionsRouter.get("/login",async (req,res)=>{
-    res.render("login")
+    res.render("login",{
+        rutaCSS:"login"
+    })
 })
 sessionsRouter.post("/login", async(req,res)=>{
     const {email, password}=req.body
@@ -21,7 +23,7 @@ sessionsRouter.post("/login", async(req,res)=>{
             if(user.password === password)
             {
                 req.session.login=true
-               return res.redirect('/api/products');
+               return res.redirect(`/api/products?info=${user.first_name}`);
             }
             else
             {

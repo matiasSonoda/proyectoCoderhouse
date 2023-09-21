@@ -4,7 +4,9 @@ import usersModel from "../models/users.model.js";
 const usersRouter = Router()
 
 usersRouter.get("/signin",async(req,res)=>{
-    res.render("signin")
+    res.render("signin",{
+        rutaCSS:"sign_in"
+    })
   })
 usersRouter.post("/signin",async(req,res)=>{
     const {first_name, last_name, email, password, age}= req.body
