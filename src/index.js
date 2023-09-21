@@ -24,7 +24,12 @@ mongoose.connect(process.env.MONGO_URL)
     console.log(error)
 })
 //Handlebars
-app.engine("handlebars", engine())
+app.engine("handlebars", engine({
+    runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+    }
+}))
 app.set("view engine","handlebars")
 app.set("views", path.resolve(__dirname+"/views"))
 
