@@ -35,21 +35,10 @@ sessionsRouter.post("/login", async(req,res)=>{
         res.status(400).send(error)
     }
 })
-sessionsRouter.get("/logout",async(req,res)=>{
+sessionsRouter.post("/logout",async(req,res)=>{
     req.session.destroy((error)=>{
-
-    })
-})
-
-async  function  auth(req,res,next){
-    try{
-    if(req.session.email==="admin@admin.com"&& req.session.password==="admin"){
-        return next()
-    }
-    return res.send("No tenes accesos a este contenido")}
-    catch(error){
         console.log(error)
-    }
-}
-
+    })
+    res.redirect("/api/sessions/login")
+})
 export default sessionsRouter

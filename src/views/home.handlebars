@@ -1,16 +1,18 @@
 <main>
-    <h1>Productos</h1>
+    <h1>Productos <h1 id="nameId"></h1></h1>
+    <form action="/api/sessions/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
 </main>
 
 {{#each products}}
     <div>
-                <p>ID:{{this.id}}</p>
-                <p>Titulo:{{this.title}}</p>
-                <p>Descripcion:{{this.description}}</p>
-                <p>Precio:{{this.price}}</p>
-                <p>status:{{this.status}}</p>
-                <p>code:{{this.code}}</p>
-                <p>stock:{{this.stock}}</p>
+        <p>ID:{{this.id}}</p>
+        <p>Titulo:{{this.title}}</p>
+        <p>Descripcion:{{this.description}}</p>
+        <p>Precio:{{this.price}}</p>
+        <p>status:{{this.status}}</p>
+        <p>code:{{this.code}}</p>
+        <p>stock:{{this.stock}}</p>
     </div>
-
 {{/each}}

@@ -26,32 +26,5 @@ viewsRouter.get("/home", async(req,res)=>{
         info,
     })
 })
-/*viewsRouter.post('/login', async (req, res) => {
-    try {
-      const user = await User.findOne({ email: req.body.email });
-      if (!user) {
-        return res.status(400).send('Usuario no encontrado');
-      }
-      if (user.password !== req.body.password) { 
-        return res.status(400).send('Contraseña incorrecta');
-      }
-      req.session.user = user; // Guarda el usuario en la sesión
-      res.redirect('/api/products'); // Redirige al usuario a la página de productos después del inicio de sesión
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });*/
-/*viewsRouter.get("/signin",async(req,res)=>{
-  res.render("signin")
-})
-viewsRouter.post('/signin', async (req, res) => {
-    try {
-      const newUser = new User(req.body);
-      await newUser.save();
-      res.redirect('/login'); // Redirige al usuario a la página de login después del registro
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  });*/
 
   export default viewsRouter
