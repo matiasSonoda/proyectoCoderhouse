@@ -4,7 +4,6 @@ import "dotenv/config"
 import productRouter from "./routes/products.routes.js";
 import mongoose from "mongoose";
 import cartRoutes from "./routes/carts.routes.js";
-import cartsModel from "./models/carts.model.js";
 import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
 import sessionRouter from "./routes/sessions.routes.js"
@@ -13,6 +12,7 @@ import usersRouter from "./routes/users.routes.js";
 import __dirname from "./utils.js";
 import * as path from "path"
 import viewsRouter from "./routes/views.routes.js";
+
 const app= express()
 const PORT= 4000;
 
@@ -34,30 +34,9 @@ app.set("view engine","handlebars")
 app.set("views", path.resolve(__dirname+"/views"))
 
 //Archivos estaticos
+
 app.use( "/",express.static(__dirname+"/public"))
-const products=[
-    {
-        nombre:"pablo",
-        apellido:"gonzalez"
-    },
-    {
-        nombre:"martin",
-        apellido:"gerez"
-    },
-    {
-        nombre:"matias",
-        apellido:"ramirez"
-    }
-]
-
-
-app.get("/",(req,res)=>{
-    res.render("home",{
-        title:"backend | handlebars",
-        admin: true,
-        products:products
-})
-})
+app.use(express.static('public'));
 
 //middlewares
 app.use(express.json())
@@ -74,23 +53,15 @@ app.use(session({
 }))
 
 //routes
-app.use(express.static('public'));
+
 app.use("/static", viewsRouter )
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRoutes)
 app.use("/api/sessions", sessionRouter)
 app.use("/api/users", usersRouter)
-//SESSION
-/*app.get("/session",(req, res)=>{
-    if(req.session.counter){
-        req.session.counter++
-        res.send(`Has entrado ${req.session.counter} veces`)
-    }else{
-        req.session.counter=1
-        res.send("Hola, por primera vez")
-    }
-})*/
+
 //Cookies
+
 app.get("/setcookie",(req,res)=>{
     res.cookie("CookieCookie","Esto es el valor de una cookie",{maxAge:60000,signed:true}).send("Cookie creada")
 })
@@ -98,7 +69,9 @@ app.get("/getcookie",(req,res)=>{
     res.send(req.signedCookies)
     res.send(req.cookies)
 })
+
 //server
+
 app.listen(PORT,()=>{
     console.log(`server on ${PORT}`)
 })
