@@ -29,8 +29,7 @@ productRouter.get("/", async(req, res) => {
                 sort: {price:sort|| "asc"} 
             }
             const products = await productModel.paginate(filter,options)
-            res.render("realTimeProducts",{products:products.docs})
-      res.render('realTimeProducts', { products }); // Renderiza la vista 'products' con los productos
+            res.render("home",{products})
     } catch (error) {
       res.status(500).send({ error: `Error al obtener productos: ${error}` });
     }
