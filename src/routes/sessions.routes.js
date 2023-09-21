@@ -11,9 +11,9 @@ sessionsRouter.post("/login", async(req,res)=>{
     const {email, password}=req.body
     try{
         if (email === "adminCoder@coder.com" && password==="adminCod3r123")
-            res.redirect("/static/realTimeProducts")
+           return res.redirect("/static/realTimeProducts")
         if(req.session.login){
-            res.status(200).send({resultado: "Login ya existente"})
+           return res.status(200).send({resultado: "Login ya existente"})
         }
         const user= await usersModel.findOne({email:email})
         if (user){

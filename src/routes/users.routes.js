@@ -11,7 +11,7 @@ usersRouter.post("/signin",async(req,res)=>{
     try{
         const newUser = await usersModel.create({first_name,last_name,email,age,password})
         await newUser.save()
-        res.redirect('/static/login');
+        res.redirect('/api/sessions/login');
     }
     catch(error){
         res.status(400).send(error)
