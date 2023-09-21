@@ -38,7 +38,7 @@ viewsRouter.post('/login', async (req, res) => {
         return res.status(400).send('Contraseña incorrecta');
       }
       req.session.user = user; // Guarda el usuario en la sesión
-      res.redirect('/products'); // Redirige al usuario a la página de productos después del inicio de sesión
+      res.redirect('/api/products'); // Redirige al usuario a la página de productos después del inicio de sesión
     } catch (error) {
       res.status(500).send(error);
     }
