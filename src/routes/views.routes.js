@@ -8,9 +8,11 @@ import cartRoutes from "./carts.routes.js";
 const viewsRouter = Router()
 
 viewsRouter.get("/realtimeproducts", async(req,res)=>{
+  const products = await productModel.find().lean()
     res.render("realTimeProducts",{
         rutaCSS:"realTimeProducts",
         rutaJS:"realTimeProducts",
+        products,
     })
 })
 

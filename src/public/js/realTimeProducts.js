@@ -2,7 +2,7 @@ document.getElementById('formProduct').addEventListener('submit', function(event
     event.preventDefault(); // Evita que el formulario se envíe de la forma predeterminada
   
     // Crea un objeto FormData a partir del formulario
-    var formData = new FormData(this);
+    let formData = new FormData(this);
   
     // Realiza una solicitud AJAX para agregar el producto
     fetch('/api/products', {
@@ -14,8 +14,8 @@ document.getElementById('formProduct').addEventListener('submit', function(event
     })
     .then(function(product) {
       // Agrega el nuevo producto a la lista de productos
-      var productsContainer = document.getElementById('products-container');
-      var productDiv = document.createElement('div');
+      let productsContainer = document.getElementById('products-container');
+      let productDiv = document.createElement('div');
       productDiv.innerHTML = `
         <p>ID:${product.id}</p>
         <p>Titulo:${product.title}</p>
