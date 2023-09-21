@@ -20,7 +20,7 @@ sessionsRouter.post("/login", async(req,res)=>{
             if(user.password === password)
             {
                 req.session.login=true
-                res.redirect('/api/products');
+               return res.redirect('/api/products');
             }
             else
             {

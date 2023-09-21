@@ -20,13 +20,17 @@ const productRouter= Router();
 productRouter.get("/", async(req, res) => {
     const {limit, page, sort, category} = req.query
     try {
-      
-      const products = await productModel.find().lean(); // Obtiene todos los productos
       let filter = {};
         if (category) {
             filter.category = category;}
-            const prods = await productModel.paginate(filter,{limit : limit || 10, page:page, sort: {price: sort} } )     
-      res.render('realTimeProducts', { prods }); // Renderiza la vista 'products' con los productos
+            const options={
+                limit:parseInt(limit) || 10,
+                page:parseInt(page),
+                sort: {price:sort|| "asc"} 
+            }
+            const products = await productModel.paginate(filter,options)
+            res.render("realTimeProducts",{products:products.docs})
+      res.render('realTimeProducts', { products }); // Renderiza la vista 'products' con los productos
     } catch (error) {
       res.status(500).send({ error: `Error al obtener productos: ${error}` });
     }
