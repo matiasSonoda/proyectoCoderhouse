@@ -5,6 +5,6 @@ export const createHash=(password)=>bcrypt.hashSync(password,bcrypt.genSaltSync(
 
 const hashPassowrd=(createHash("coderhouse"))
 console.log(hashPassowrd)
-export const validatePassowrd=(passwordSend,passwordBDD)=>bcrypt.compareSync(passwordSend,passwordBDD)
+export const validatePassword=(passwordSend,passwordBDD)=>bcrypt.compareSync(passwordSend,passwordBDD)
 
-console.log (validatePassowrd("coderhouse",hashPassowrd))
+console.log (validatePassword("coderhouse",hashPassowrd))

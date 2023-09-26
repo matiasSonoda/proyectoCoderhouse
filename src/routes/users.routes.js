@@ -17,7 +17,7 @@ usersRouter.post("/signin", async (req, res) => {
 
     try {
         const hashPassowrd= createHash(password)
-        const newUser = await usersModel.create({ first_name, last_name, email, age, hashPassowrd });
+        const newUser = await usersModel.create({ first_name: first_name,last_name: last_name,email: email,age: age,password: hashPassowrd });
         await newUser.save();
         res.redirect('/api/sessions/login');
     } catch (error) {

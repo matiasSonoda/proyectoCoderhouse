@@ -1,6 +1,7 @@
 // Importaciones
 import { Router } from "express";
 import usersModel from "../models/users.model.js";
+import {validatePassword} from "../utils/bcrypt.js"
 
 // Creación del router
 const sessionsRouter = Router();
@@ -11,10 +12,15 @@ sessionsRouter.get("/login", (req, res) => {
 });
 
 // Ruta para iniciar sesión
-sessionsRouter.post("/login", async (req, res) => {
+sessionsRouter.post("/login",async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        const passBddTemp= usersModel.findOne(email)
+        console.log("soy pass temporal: ", passBddTemp)
+        const passBdd=passBddTemp.password
+        console.log("holis",passBdd)
+        //validatePassword(password)
         // Verificar si el usuario es el administrador
         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
             req.session.login = true;
