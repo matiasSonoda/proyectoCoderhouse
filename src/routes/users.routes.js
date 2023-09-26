@@ -1,6 +1,7 @@
 // Importaciones
 import { Router } from "express";
 import usersModel from "../models/users.model.js";
+import { createHash } from "../utils/bcrypt.js";
 
 // Creación del router
 const usersRouter = Router();
@@ -15,7 +16,8 @@ usersRouter.post("/signin", async (req, res) => {
     const { first_name, last_name, email, password, age } = req.body;
 
     try {
-        const newUser = await usersModel.create({ first_name, last_name, email, age, password });
+        const hashPassowrd= createHash(password)
+        const newUser = await usersModel.create({ first_name, last_name, email, age, hashPassowrd });
         await newUser.save();
         res.redirect('/api/sessions/login');
     } catch (error) {
