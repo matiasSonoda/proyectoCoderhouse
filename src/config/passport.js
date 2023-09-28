@@ -41,7 +41,7 @@ const initializePassport=()=>{
         console.log(accessToken)
         console.log(refreshToken)
         const user = await usersModel.findOne({email:profile._json.email})
-        if (user){
+        if (!user){
                 done(null,false)
         }else{
                 const   userCreated = await usersModel.create({
