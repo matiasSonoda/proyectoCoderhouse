@@ -35,7 +35,7 @@ const initializePassport=()=>{
     passport.use("github", new GithubStrategy({
         clientID: process.env.CLIENT_ID,
         clienteSecret: process.env.CLIENT_SECRET,
-        callBackURL: process.env.CALLBACK_URL
+        callbackURL: process.env.CALLBACK_URL
         }, async(accessToken, refreshToken, profile, done)=>{
         try{
         console.log(accessToken)
