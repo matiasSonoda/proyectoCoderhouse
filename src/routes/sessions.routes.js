@@ -11,9 +11,7 @@ const sessionsRouter = Router();
 sessionsRouter.get("/login", (req, res) => {
     res.render("login", { rutaCSS: "login" });
 });
-sessionsRouter.get("/github", passport.authenticate("github"),{scope:["user:email"]},async(req,res)=>{
-    
-})
+
 /* const { email, password } = req.body;
 
     try {
@@ -71,4 +69,12 @@ sessionsRouter.post("/logout", (req, res) => {
     res.redirect("/api/sessions/login");
 });
 
+sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{
+    
+})
+
+sessionsRouter.get("/githubSession",passport.authenticate("github"),async (req,res)=>{
+    req.session.user= req.user
+    res.status(200).send({mensaje:"session creada"})
+})
 export default sessionsRouter;
