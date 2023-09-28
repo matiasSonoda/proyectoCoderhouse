@@ -70,7 +70,7 @@ sessionsRouter.post("/logout", (req, res) => {
 });
 
 sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{
-    
+    res.status(200).send({mensaje:"Usuario creado"})
 })
 
 sessionsRouter.get("/githubSession",passport.authenticate("github"),async (req,res)=>{
