@@ -36,18 +36,17 @@ const initializePassport=()=>{
         clientID: process.env.CLIENT_ID,
         clienteSecret: process.env.CLIENT_SECRET,
         callBackURL: process.env.CALLBACK_URL
-
-    }, async(accessToken, refreshToken, profile, done)=>{
+        }, async(accessToken, refreshToken, profile, done)=>{
         try{
         console.log(accessToken)
         console.log(refreshToken)
-        const user = await usersModel.findOne(profile._json.email)
+        const user = await usersModel.findOne({email:profile._json.email})
         if (user){
                 done(null,false)
         }else{
                 const   userCreated = await usersModel.create({
                     first_name: profile._json.last_name,
-                    last_name:"",
+                    last_name:" ",
                     email: profile._json.email,
                     age: 18, // edad por defecto
                     password:"password"
