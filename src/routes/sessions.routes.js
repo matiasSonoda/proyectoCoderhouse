@@ -2,6 +2,7 @@
 import { Router } from "express";
 import usersModel from "../models/users.model.js";
 import {validatePassword} from "../utils/bcrypt.js"
+import passport from "passport";
 
 // Creación del router
 const sessionsRouter = Router();
@@ -10,17 +11,15 @@ const sessionsRouter = Router();
 sessionsRouter.get("/login", (req, res) => {
     res.render("login", { rutaCSS: "login" });
 });
-
-// Ruta para iniciar sesión
-sessionsRouter.post("/login",async (req, res) => {
-    const { email, password } = req.body;
+sessionsRouter.get("/github", passport.authenticate("github"),{scope:["user:email"]},async(req,res)=>{
+    
+})
+/* const { email, password } = req.body;
 
     try {
-        const passBddTemp= usersModel.findOne(email)
-        console.log("soy pass temporal: ", passBddTemp)
-        const passBdd=passBddTemp.password
-        console.log("holis",passBdd)
-        //validatePassword(password)
+        // Buscar al usuario en la base de datos
+        const user = await usersModel.findOne({ email: email });
+
         // Verificar si el usuario es el administrador
         if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
             req.session.login = true;
@@ -32,23 +31,38 @@ sessionsRouter.post("/login",async (req, res) => {
             return res.status(200).send({ resultado: "Login ya existente" });
         }
 
-        // Buscar al usuario en la base de datos
-        const user = await usersModel.findOne({ email: email });
-
+    
         if (user) {
             // Verificar la contraseña del usuario
-            if (user.password === password) {
+            if (validatePassword(password,user.password)) {
                 req.session.login = true;
                 return res.redirect(`/api/products?info=${user.first_name}`);
             } else {
-                return res.status(401).send({ resultado: "Contraseña no válida", message: user });
+                return res.status(401).send({ resultado: "Contraseña no válida", message: user.email });
             }
         } else {
             return res.status(404).send({ resultado: "not found", message: user });
         }
     } catch (error) {
         return res.status(400).send(error);
-    }
+    }*/ 
+// Ruta para iniciar sesión
+sessionsRouter.post("/login",passport.authenticate("login"), async (req, res) => {
+   try{
+        if(!req.user){
+            res.status(401).send({mensaje: `invalidate user`})
+        }
+        req.session.user={
+            first_name: req.user.first_name,
+            last_name: req.user.last_name,
+            age: req.user.age,
+            email: req.user.email
+        }
+        res.status(200).send({payload: req.user})
+   }
+   catch(error){
+        res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})
+   }
 });
 
 // Ruta para cerrar sesión

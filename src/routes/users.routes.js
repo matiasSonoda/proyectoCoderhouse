@@ -2,7 +2,7 @@
 import { Router } from "express";
 import usersModel from "../models/users.model.js";
 import { createHash } from "../utils/bcrypt.js";
-
+import passport from "passport";
 // Creación del router
 const usersRouter = Router();
 
@@ -10,10 +10,7 @@ const usersRouter = Router();
 usersRouter.get("/signin", (req, res) => {
     res.render("signin", { rutaCSS: "sign_in" });
 });
-
-// Ruta para registrar un usuario
-usersRouter.post("/signin", async (req, res) => {
-    const { first_name, last_name, email, password, age } = req.body;
+/*const { first_name, last_name, email, password, age } = req.body;
 
     try {
         const hashPassowrd= createHash(password)
@@ -22,6 +19,16 @@ usersRouter.post("/signin", async (req, res) => {
         res.redirect('/api/sessions/login');
     } catch (error) {
         res.status(400).send(error);
+    }*/ 
+// Ruta para registrar un usuario
+usersRouter.post("/", passport.authenticate("register"),async (req, res) => {
+    try{
+        if (!req.user){
+            return res.status(400).send({mensaje:`usuario ya existente`})
+        }
+        return res.status(200).send({mensaje: `Usuario creado`})
+    }catch(error){
+            res.status(500).send({mensaje:`error al crear usuario: ${error}`})
     }
 });
 

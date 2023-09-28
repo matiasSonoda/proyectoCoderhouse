@@ -1,6 +1,6 @@
 import express, { urlencoded } from "express";
 import session from "express-session";
-import "dotenv/config"
+import "dotenv/config" //Permite utilizar variables de entorno
 import productRouter from "./routes/products.routes.js";
 import mongoose from "mongoose";
 import cartRoutes from "./routes/carts.routes.js";
@@ -12,7 +12,8 @@ import usersRouter from "./routes/users.routes.js";
 import __dirname from "./utils.js";
 import * as path from "path"
 import viewsRouter from "./routes/views.routes.js";
-
+import passport from "passport";
+import initializePassport from "./config/passport.js";
 const app= express()
 const PORT= 4000;
 
@@ -51,7 +52,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false    
 }))
-
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 //routes
 
 app.use("/static", viewsRouter )
