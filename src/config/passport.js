@@ -34,7 +34,7 @@ const initializePassport=()=>{
     //done es un res.status()
     passport.use("github", new GithubStrategy({
         clientID: process.env.CLIENT_ID,
-        client: process.env.CLIENT_SECRET,
+        clientSecret: process.env.CLIENT_SECRET,
         callbackURL: process.env.CALLBACK_URL
         }, async(accessToken, refreshToken, profile, done)=>{
         try{
@@ -50,7 +50,6 @@ const initializePassport=()=>{
                 password:"password"
             })
             done(null, userCreated)
-                done(null,false)
         }else{
             done(null,false)
         }}
