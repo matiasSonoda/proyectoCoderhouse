@@ -42,7 +42,7 @@ app.use(express.static('public'));
 //middlewares
 app.use(express.json())
 app.use(urlencoded({extended:true}))
-app.use(cookieParser(process.env.SIGNED_COOKIE))
+app.use(cookieParser(process.env.JWT_SECRET))
 app.use(session({
     store: MongoStore.create({
         mongoUrl:process.env.MONGO_URL,

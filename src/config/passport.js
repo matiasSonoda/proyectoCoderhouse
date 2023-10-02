@@ -3,9 +3,40 @@ import passport from "passport" //maneja las estrategias
 import { createHash, validatePassword } from "../utils/bcrypt.js"
 import GithubStrategy from "passport-github2"
 import usersModel from "../models/users.model.js"
+import jwt from "passport-jwt"
+import { application, json } from "express"
 //Defino la estrategia
 const localStrategy= local.Strategy
+const JWTStrategy= jwt.Strategy
+const ExtractJWT= jwt.ExtractJwt // extractor de los header de la consulta
+
+
 const initializePassport=()=>{
+
+    const cookiesExtractor= req =>{
+        console.log(req.cookies)
+        //{} no hay cookies != no existe mi cookie
+        //si existen cookies, consulte por mi cookie y  sino asigno {}
+        const token= req.cookies ? req.cookies.jwtCookie : {}
+        console.log(token)
+        return token
+
+    }
+
+    application.use("jwt", new JWTStrategy({
+        jwtFromRequest: ExtractJWT.fromExtractors([cookiesExtractor]),//consulto el token de las cookies
+        secretOrKey: process.env.JWT_SECRET
+
+    },async (jwt_payload,done)=>{
+        try{
+            return done(null, jwt_payload)//retorno el contenido del token
+        }
+        catch(error){
+            return done(error)
+        }
+    }))
+
+
     passport.use("register", new localStrategy({ passReqToCallback:true,usernameField:"email" }, async(req,username,password,
         done)=>{
         //Defino como voy a registrar un usuario

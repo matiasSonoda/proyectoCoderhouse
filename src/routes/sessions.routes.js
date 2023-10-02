@@ -69,6 +69,10 @@ sessionsRouter.post("/logout", (req, res) => {
     res.redirect("/api/sessions/login");
 });
 
+sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:false}), async (req,res)=>{
+    res.status(200).send(req.user)
+})
+
 sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{
     res.status(200).send({mensaje:"Usuario creado"})
 })
