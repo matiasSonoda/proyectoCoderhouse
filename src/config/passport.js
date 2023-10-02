@@ -13,7 +13,7 @@ const ExtractJWT= jwt.ExtractJwt // extractor de los header de la consulta
 
 const initializePassport=()=>{
 
-    const cookiesExtractor= req =>{
+    const cookieExtractor = req =>{
         console.log(req.cookies)
         //{} no hay cookies != no existe mi cookie
         //si existen cookies, consulte por mi cookie y  sino asigno {}
@@ -24,7 +24,7 @@ const initializePassport=()=>{
     }
 
     passport.use("jwt", new JWTStrategy({
-        jwtFromRequest: ExtractJWT.fromExtractors([cookiesExtractor]),//consulto el token de las cookies
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),//consulto el token de las cookies
         secretOrKey: process.env.JWT_SECRET
 
     },async (jwt_payload,done)=>{

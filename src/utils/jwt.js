@@ -12,12 +12,12 @@ export const generateToken=(user)=>{
 
 export const  authToken=(req,res,next)=>{
     //consulto el header
-    const authHeader= req.headers.Authorization //Consulto si existe el token
+    const authHeader= req.headers.Authorization  //Consulto si existe el token
     if (!authHeader){
         return res.status(401).send({error:"Usuario no autenticado"})
     }
 
-    const token = authHeader.split("  ")[1]//Separo en dos mi token y me quedo con la parte valida
+    const token = authHeader.split(" ")[1]//Separo en dos mi token y me quedo con la parte valida
 
     jwt.sign(token, process.env.JWT_SECRET, (error,credentials)=>{
         if(error){
