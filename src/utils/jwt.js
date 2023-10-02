@@ -1,3 +1,4 @@
+import "dotenv/config"
 import jwt from "jsonwebtoken"
 
 export const generateToken=(user)=>{    
@@ -6,9 +7,11 @@ export const generateToken=(user)=>{
         2° parametro: clave privada el cifrado
         3° parametro: tiempo de expiracion
     */
-    const token= jwt.sign({user},process.env.JWT_SECRET,{expiresIn:"12h"})
+    const token= jwt.sign({user},"coderhouse123",{expiresIn:"12h"})
     return token
 }
+
+console.log(generateToken({"_id":"651b4e08b66aec9d12b8c7f1","first_name":"matias","last_name":"sonoda","email":"matias@matias.com","age":{"$numberInt":"27"},"password":"$2b$15$DWfzkYadQkbW5WiUR9R6uuN9Bl5FLkHlqzgpY9CQqrsatI7GK4nRO"}))
 
 export const  authToken=(req,res,next)=>{
     //consulto el header

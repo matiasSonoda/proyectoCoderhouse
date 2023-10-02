@@ -49,8 +49,8 @@ app.use(session({
         ttl:90//segundos
     }),
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false    
+    resave: true,
+    saveUninitialized: true    
 }))
 initializePassport()
 app.use(passport.initialize())

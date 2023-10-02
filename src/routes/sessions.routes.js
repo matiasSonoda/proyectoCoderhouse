@@ -69,8 +69,15 @@ sessionsRouter.post("/logout", (req, res) => {
     res.redirect("/api/sessions/login");
 });
 
-sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:false}), async (req,res)=>{
-    res.status(200).send(req.user)
+sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:true}), async (req,res)=>{
+    res.status(200).send({ mensaje: req.user})
+    console.log(req.user.user)
+    req.session.user={
+        first_name: req.user.user.first_name,
+        last_name: req.user.user.last_name,
+        age: req.user.user.age,
+        email: req.user.user.email
+    }
 })
 
 sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{
