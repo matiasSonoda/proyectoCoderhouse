@@ -23,7 +23,7 @@ const initializePassport=()=>{
 
     }
 
-    application.use("jwt", new JWTStrategy({
+    passport.use("jwt", new JWTStrategy({
         jwtFromRequest: ExtractJWT.fromExtractors([cookiesExtractor]),//consulto el token de las cookies
         secretOrKey: process.env.JWT_SECRET
 
