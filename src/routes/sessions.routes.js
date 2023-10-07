@@ -2,7 +2,9 @@
 import { Router } from "express";
 import usersModel from "../models/users.model.js";
 import {validatePassword} from "../utils/bcrypt.js"
+import { passportError, authorization } from "../utils/messageErrors.js";
 import passport from "passport";
+import { generateToken } from "../utils/jwt.js";
 
 // Creación del router
 const sessionsRouter = Router();
@@ -56,6 +58,10 @@ sessionsRouter.post("/login",passport.authenticate("login"), async (req, res) =>
             age: req.user.age,
             email: req.user.email
         }
+        const token = generateToken(req.user)
+        res.cookie("jwtCookie", token, {
+            maxAge: 43200000
+        })
         res.status(200).send({payload: req.user})
    }
    catch(error){
@@ -82,6 +88,10 @@ sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:true}), asyn
 
 sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{
     res.status(200).send({mensaje:"Usuario creado"})
+})
+
+sessionsRouter.get("/current", passportError("jwt"),authorization("admin"),(req,res)=>{
+    res.send(req.user)
 })
 
 sessionsRouter.get("/githubSession",passport.authenticate("github"),async (req,res)=>{

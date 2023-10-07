@@ -1,19 +1,15 @@
 import express, { urlencoded } from "express";
 import session from "express-session";
 import "dotenv/config" //Permite utilizar variables de entorno
-import productRouter from "./routes/products.routes.js";
 import mongoose from "mongoose";
-import cartRoutes from "./routes/carts.routes.js";
 import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
-import sessionRouter from "./routes/sessions.routes.js"
 import MongoStore from "connect-mongo";
-import usersRouter from "./routes/users.routes.js";
 import __dirname from "./utils.js";
 import * as path from "path"
-import viewsRouter from "./routes/views.routes.js";
 import passport from "passport";
 import initializePassport from "./config/passport.js";
+import router from "./routes/index.routes.js";
 const app= express()
 const PORT= 4000;
 
@@ -57,11 +53,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 //routes
 
-app.use("/static", viewsRouter )
-app.use("/api/products", productRouter)
-app.use("/api/carts", cartRoutes)
-app.use("/api/sessions", sessionRouter)
-app.use("/api/users", usersRouter)
+app.use("/", router)
 
 //Cookies
 

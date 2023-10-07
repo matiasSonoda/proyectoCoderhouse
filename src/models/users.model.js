@@ -21,8 +21,21 @@ const usersSchema = new Schema({
     password:{
         type:String,
         require:true
-    }
-})
+    },
+    rol:{
+        type: String,
+        default: "user"
+    },
+    cart:{
+        type:[
+            {    
+                id_prod:{
+                    type: Schema.Types.ObjectId,
+                    ref:"products",
+                    required:true
+                        }
+    }]
+}})
 
 const usersModel = model("users", usersSchema)
 export default usersModel
