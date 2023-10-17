@@ -91,7 +91,7 @@ const initializePassport=()=>{
     }))
     //Inicializar la sesion del usuario
     passport.serializeUser((user, done)=>{
-        done(null,user.user._id)
+        done(null,user._id)
     })
     //Eliminar la sesion del usuario
     passport.deserializeUser(async(id,done)=>{

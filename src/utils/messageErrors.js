@@ -5,7 +5,7 @@ import passport from "passport";
 //json, github, sessionLocal son las tres estrategias que tengo
 
 //Primer filtro de cualquier estrategia de passport
-export const passportError = (estrategy)=>{
+export const passportError = (strategy)=>{
     return async(req,res,next)=>{
         passport.authenticate(strategy, (error, user , info)=>{
             if(error){return next(error)}
