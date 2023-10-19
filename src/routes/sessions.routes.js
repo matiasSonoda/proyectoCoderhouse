@@ -50,7 +50,7 @@ sessionsRouter.get("/login", (req, res) => {
 sessionsRouter.post("/login",passport.authenticate("login"), postLoginSession);
 
 // Ruta para cerrar sesión
-sessionsRouter.post("/logout", (req, res) => {postLogoutSession});
+sessionsRouter.post("/logout", postLogoutSession);
 
 //Ruta de inicio sesion con JWT
 //sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:true}), async (req,res)=>{postJwtLoginSession})

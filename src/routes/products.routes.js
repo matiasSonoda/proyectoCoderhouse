@@ -8,10 +8,10 @@ import { getProduct, getProducts, postProduct,putProduct,deleteProduct } from ".
 const productRouter = Router();
 
 // Ruta para obtener todos los productos
-productRouter.get("/", getProduct);
+productRouter.get("/", getProducts);
 
 // Ruta para obtener un producto por ID
-productRouter.get("/:id", getProducts);
+productRouter.get("/:id", getProduct);
 
 // Ruta para crear un producto
 productRouter.post("/",passportError("jwt"), authorization("admin"), postProduct);

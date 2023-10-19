@@ -2,9 +2,7 @@ import { generateToken } from "../utils/jwt.js"
 
 export const postLoginSession = async(req,res)=>{
     try{
-        
         if(!req.user){
-            console.log("holaaaaa",req.user)
             res.status(401).send({mensaje: `invalidate user`})
         }
         req.session.user={
@@ -18,6 +16,7 @@ export const postLoginSession = async(req,res)=>{
             maxAge: 43200000
         })
         res.redirect("/api/products")
+
    }
    catch(error){
         res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})
@@ -25,7 +24,10 @@ export const postLoginSession = async(req,res)=>{
 }
 
 export const postLogoutSession = async(req,res)=>{
-    req.session.destroy((error) => console.log(error));
+    await req.session.destroy((error) =>{
+        if(error)
+        {console.log(error)
+        res.status(500).send({error:"Fallo en cerrar session"})}});
     res.clearCookie("jwtCookie")
     res.redirect("/api/sessions/login");
 }
