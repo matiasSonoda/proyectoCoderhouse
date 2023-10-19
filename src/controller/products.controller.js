@@ -1,4 +1,5 @@
 import productModel from  "../models/products.model.js"
+
 export const getPorducts = async(req,res)=>{
     const { limit, page, sort, category, info } = req.query;
     const filter = category ? { category } : {};
@@ -30,7 +31,7 @@ export const getPorduct = async(req,res)=>{
     try{
         const product= await productModel.findById(id)
         if (product){
-            res.status(200).send(product)
+            res.status(200).send({ resultado: "Ok", message: product });
         }
 
         res.status(404).send({error: "producto no encontrado"})

@@ -5,7 +5,8 @@ import {validatePassword} from "../utils/bcrypt.js"
 import { passportError, authorization } from "../utils/messageErrors.js";
 import passport from "passport";
 import { generateToken } from "../utils/jwt.js";
-
+import { postLogoutSession } from "../controller/sessions.controller.js";
+import { postJwtLoginSession } from "../controller/jwtSessions.controller.js";
 // Creación del router
 const sessionsRouter = Router();
 
@@ -47,18 +48,17 @@ sessionsRouter.get("/login", (req, res) => {
         return res.status(400).send(error);
     }*/ 
 // Ruta para iniciar sesión
-sessionsRouter.post("/login",passport.authenticate("login"), async (req, res) => {});
+//sessionsRouter.post("/login",passport.authenticate("login"), async (req, res) => {});
 
 // Ruta para cerrar sesión
-sessionsRouter.post("/logout", (req, res) => {});
+sessionsRouter.post("/logout", (req, res) => {postLogoutSession});
 
-sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:true}), async (req,res)=>{})
+//Ruta de inicio sesion con JWT
+sessionsRouter.get("/testJWT", passport.authenticate("jwt",{session:true}), async (req,res)=>{postJwtLoginSession})
 
-sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{})
+//sessionsRouter.get("/github", passport.authenticate("github",{scope:["user:email"]}),async(req,res)=>{})
 
-sessionsRouter.get("/current", passportError("jwt"),authorization("user"),(req,res)=>{
-    res.send(req.user)
-})
+sessionsRouter.get("/current", passportError("jwt"),authorization("user"),(req,res)=>{res.send(req.user)})
 
-sessionsRouter.get("/githubSession",passport.authenticate("github"),async (req,res)=>{})
+//sessionsRouter.get("/githubSession",passport.authenticate("github"),async (req,res)=>{})
 export default sessionsRouter;

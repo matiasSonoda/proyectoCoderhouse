@@ -3,6 +3,7 @@ import { Router } from "express";
 import usersModel from "../models/users.model.js";
 import { createHash } from "../utils/bcrypt.js";
 import passport from "passport";
+import {postRegisterUser} from "../controller/users.controller.js"
 // Creación del router
 const usersRouter = Router();
 
@@ -21,15 +22,6 @@ usersRouter.get("/signin", (req, res) => {
         res.status(400).send(error);
     }*/ 
 // Ruta para registrar un usuario
-usersRouter.post("/", passport.authenticate("register"),async (req, res) => {
-    try{
-        if (!req.user){
-            return res.status(400).send({mensaje:`usuario ya existente`})
-        }
-        return res.status(200).send({mensaje: `Usuario creado`})
-    }catch(error){
-            res.status(500).send({mensaje:`error al crear usuario: ${error}`})
-    }
-});
+usersRouter.post("/", passport.authenticate("register"),async (req, res) => {postRegisterUser});
 
 export default usersRouter;

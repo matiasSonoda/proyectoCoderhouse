@@ -25,23 +25,3 @@ export const postLogoutSession = async(req,res)=>{
     res.clearCookie("jwtCookie")
     res.redirect("/api/sessions/login");
 }
-
-export const postJwtLoginSession = async(req,res)=>{
-    res.status(200).send({ mensaje: req.user})
-    console.log(req.user.user)
-    req.session.user={
-        first_name: req.user.user.first_name,
-        last_name: req.user.user.last_name,
-        age: req.user.user.age,
-        email: req.user.user.email
-    }
-}
-
-export const postGithubRegisterSession = async(req,res)=>{
-    res.status(200).send({mensaje:"Usuario creado"})
-}
-
-export const postGithubLoginSession = async(req,res)=>{
-    req.session.user= req.user
-    res.status(200).send({mensaje:"session creada"})
-}
