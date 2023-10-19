@@ -5,18 +5,17 @@ import { getAllCarts, getSpecificCart, postProductInCart, putSpecificCart, putQu
 const cartRoutes = Router();
 
 
-cartRoutes.get("/", async (req, res) => {getAllCarts});
+cartRoutes.get("/", getAllCarts);
 
-cartRoutes.get("/:cid", async (req, res) => {getSpecificCart});
+cartRoutes.get("/:cid", getSpecificCart);
 
-cartRoutes.post("/:cid/products/:pid", async (req, res) => {postProductInCart});
+cartRoutes.post("/:cid/products/:pid", postProductInCart);
 
-cartRoutes.delete("/:cid", async (req, res) => {deleteSpecificCart});
+cartRoutes.delete("/:cid", deleteSpecificCart);
 
-cartRoutes.delete("/:cid/products/:pid", async (req, res) => {deleteProductOfCart});
+cartRoutes.delete("/:cid/products/:pid",deleteProductOfCart);
 
-
-cartRoutes.put("/:cid", async (req, res) => {putSpecificCart});
+cartRoutes.put("/:cid",putSpecificCart);
 
 //En este metodo en lugar de buscar el indice, tenes que hacer la misma validacion con cart.products.find()
 //que hice en la otra ruta PUT. pero sin el forEach porque no envias un array, sino un objeto con quantity.

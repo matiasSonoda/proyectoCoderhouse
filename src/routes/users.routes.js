@@ -22,6 +22,6 @@ usersRouter.get("/signin", (req, res) => {
         res.status(400).send(error);
     }*/ 
 // Ruta para registrar un usuario
-usersRouter.post("/", passport.authenticate("register"),async (req, res) => {postRegisterUser});
+usersRouter.post("/signin", passport.authenticate("register"),async (req, res) => {res.redirect("/api/sessions/login")});
 
 export default usersRouter;

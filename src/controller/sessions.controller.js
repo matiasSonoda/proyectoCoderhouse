@@ -1,6 +1,8 @@
 export const postLoginSession = async(req,res)=>{
     try{
+        
         if(!req.user){
+            console.log("holaaaaa",req.user)
             res.status(401).send({mensaje: `invalidate user`})
         }
         req.session.user={
@@ -14,6 +16,7 @@ export const postLoginSession = async(req,res)=>{
             maxAge: 43200000
         })
         res.status(200).send({payload: req.user})
+        res.redirect("/api/products")
    }
    catch(error){
         res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})

@@ -9,7 +9,7 @@ export const getAllCarts = async(req,res)=>{
       }
 }
 
-export const getSpecificCart = async(res,res)=>{
+export const getSpecificCart = async(req,res)=>{
     const { cid } = req.params;
   try {
     const carts = await cartsModel.findById(cid).populate("products.id_prod");

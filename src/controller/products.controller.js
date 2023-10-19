@@ -1,6 +1,6 @@
 import productModel from  "../models/products.model.js"
 
-export const getPorducts = async(req,res)=>{
+export const getProducts = async(req,res)=>{
     const { limit, page, sort, category, info } = req.query;
     const filter = category ? { category } : {};
     const options = {
@@ -26,7 +26,7 @@ export const getPorducts = async(req,res)=>{
     }
 }
 
-export const getPorduct = async(req,res)=>{
+export const getProduct = async(req,res)=>{
     const {id}= req.params;
     try{
         const product= await productModel.findById(id)
