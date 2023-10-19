@@ -1,3 +1,5 @@
+import { generateToken } from "../utils/jwt.js"
+
 export const postLoginSession = async(req,res)=>{
     try{
         
@@ -15,7 +17,6 @@ export const postLoginSession = async(req,res)=>{
         res.cookie("jwtCookie", token, {
             maxAge: 43200000
         })
-        res.status(200).send({payload: req.user})
         res.redirect("/api/products")
    }
    catch(error){

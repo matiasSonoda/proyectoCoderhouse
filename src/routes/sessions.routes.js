@@ -4,7 +4,6 @@ import usersModel from "../models/users.model.js";
 import {validatePassword} from "../utils/bcrypt.js"
 import { passportError, authorization } from "../utils/messageErrors.js";
 import passport from "passport";
-import { generateToken } from "../utils/jwt.js";
 import { postLogoutSession,postLoginSession } from "../controller/sessions.controller.js";
 import { postJwtLoginSession } from "../controller/jwtSessions.controller.js";
 // Creación del router
