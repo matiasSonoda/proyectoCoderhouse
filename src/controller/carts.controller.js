@@ -129,3 +129,12 @@ export const putQuantityProductOfCart = async(req,res)=>{
     res.status(400).send(`Error: ${error}`);
   }
 }
+
+export const postBuyCart = async (req, res) => {
+    const cid = req.params
+    const cart = await cartsModel.findById(cid)
+    if (cart){
+      console.log("hola")
+    }
+
+}
