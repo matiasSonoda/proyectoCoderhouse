@@ -1,5 +1,7 @@
 import cartsModel from "../models/carts.model.js";
-
+import productModel from "../models/products.model.js";
+import ticketModel from "../models/tickets.model.js";
+import { v4 as uuidv4 } from "uuid";
 export const getAllCarts = async(req,res)=>{
     try {
         const carts = await cartsModel.find();
@@ -131,10 +133,44 @@ export const putQuantityProductOfCart = async(req,res)=>{
 }
 
 export const postBuyCart = async (req, res) => {
-    const cid = req.params
+    const {cid} = req.params
+    const {email} = req.user.user
+    const cartID = req.user.user.cart
     const cart = await cartsModel.findById(cid)
-    if (cart){
-      console.log("hola")
+    if (cart._id.toString() === cartID)
+    {
+        let message = "Compra completada"
+        let allOutOfStock = true
+        let amount = 0
+        for ( let i = 0; i < cart.products.length; i++){
+          const product = await productModel.findById(cart.products[i].id_prod)
+          if (product.stock > cart.products[i].quantity ){
+            const update = product.stock - cart.products[i].quantity
+            allOutOfStock = false
+            product.stock = update
+            for ( let j= 0; j < cart.products[i].quantity; j++){
+              amount += product.price
+            }
+            await product.save()
+        }
+          else{
+             message+= `\nNo hay stock suficiente para ${cart.products[i].id_prod}`
+             cart.products.splice(i,1)
+          }
+      }
+      cart.products = []
+      await cart.save()
+      if(allOutOfStock){
+       return res.status(400).send("No hay stock de ningun producto. No se pudo completar la compra")
+      }
+      cart.save()
+      const ticket = await ticketModel.create({code:uuidv4(), purchase_dateTime:Date.now(),purchaser:email,amount:amount})
+      if (message){
+          return res.status(200).send({message, ticket})
+        }
+    else {
+      return res.status(404).send('Carrito no encontrado');
     }
-
+  }
 }
+

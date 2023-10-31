@@ -17,9 +17,9 @@ productRouter.get("/:id", getProduct);
 productRouter.post("/",passportError("jwt"), authorization("admin"), postProduct);
 
 // Ruta para actualizar un producto
-productRouter.put("/:id",putProduct);
+productRouter.put("/:id",passportError("jwt"),authorization("admin"),putProduct);
 
 // Ruta para eliminar un producto
-productRouter.delete("/:id", deleteProduct);
+productRouter.delete("/:id",passportError("jwt"),authorization("admin"), deleteProduct);
 
 export default productRouter;
