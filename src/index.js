@@ -10,6 +10,7 @@ import * as path from "path"
 import passport from "passport";
 import initializePassport from "./config/passport.js";
 import router from "./routes/index.routes.js";
+import errorHandler from "./middlewares/errors/index.js"
 const app= express()
 const PORT= 4000;
 
@@ -54,7 +55,7 @@ app.use(passport.session())
 //routes
 
 app.use("/", router)
-
+app.use(errorHandler)
 //Cookies
 
 app.get("/setcookie",(req,res)=>{

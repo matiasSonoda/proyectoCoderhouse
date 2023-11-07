@@ -1,4 +1,7 @@
 import productModel from  "../models/products.model.js"
+import EErrors from "../service/error/enums.js";
+import customError from "../service/error/customError.js";
+import { productErrorInfo } from "../service/error/info.js";
 
 export const getProducts = async(req,res)=>{
     const { limit, page, sort, category, info } = req.query;
@@ -44,6 +47,14 @@ export const postProduct = async(req,res)=>{
     const { title, description, stock, code, price, category } = req.body;
 
     try {
+        if (!title ||!price ||!code ||!category){
+            customError.createError({
+                name:"Product creation error",
+                cause:productErrorInfo({title, price, code, category}),
+                message:"Error trying to create product",
+                code: EErrors.INVALID_TYPES_ERROR
+            })
+        }
         const newProduct = await productModel.create({ title, description, stock, code, price, category });
         res.status(200).send({ resultado: "Ok", message: newProduct });
     } catch (error) {

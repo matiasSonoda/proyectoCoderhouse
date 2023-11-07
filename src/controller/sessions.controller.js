@@ -1,9 +1,17 @@
 import { generateToken } from "../utils/jwt.js"
-
+import customError from "../service/error/customError.js"
+import EErrors from "../service/error/enums.js"
+import { LoginUserErrorInfo } from "../service/error/info.js"
 export const postLoginSession = async(req,res)=>{
     try{
         if(!req.user){
-            res.status(401).send({mensaje: `invalidate user`})
+            customError.createError({
+                name: "User login error",
+                cause:LoginUserErrorInfo({email, password }),
+                message:"Error trying to login user",
+                code:EErrors.INVALID_TYPES_ERROR
+            })
+            //res.status(401).send({mensaje: `invalidate user`})
         }
         req.session.user={
             first_name: req.user.first_name,
