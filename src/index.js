@@ -11,16 +11,17 @@ import passport from "passport";
 import initializePassport from "./config/passport.js";
 import router from "./routes/index.routes.js";
 import errorHandler from "./middlewares/errors/index.js"
-import { logger } from "./utils/logger.js";
+import { addLogger } from "./utils/logger.js";
 const app= express()
 const PORT= 4000;
+app.use(addLogger);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
-    logger.info("DB conectada")
+    console.log("DB conectada")
 })
 .catch((error)=>{
-    logger.error(error)
+    console.error(error)
 })
 //Handlebars
 app.engine("handlebars", engine({
@@ -70,5 +71,5 @@ app.get("/getcookie",(req,res)=>{
 //server
 
 app.listen(PORT,()=>{
-    logger.info(`server on ${PORT}`)
+    console.log(`server on ${PORT}`)
 })
