@@ -14,8 +14,8 @@ export const getProducts = async(req,res)=>{
     try{
          throw new Error("test error")
     }
-    catch{
-        logger.error("error")
+    catch(error){
+        logger.error(`getProducts: ${error.message} - Date: ${new Date().toLocaleString()}`)
         res.status(500).json({message: "error"})
     }
    /* try {
