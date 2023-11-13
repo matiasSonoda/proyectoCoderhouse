@@ -14,7 +14,7 @@ import errorHandler from "./middlewares/errors/index.js"
 import { addLogger } from "./utils/logger.js";
 const app= express()
 const PORT= 4000;
-app.use(addLogger);
+//app.use(addLogger);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
@@ -39,6 +39,7 @@ app.use( "/",express.static(__dirname+"/public"))
 app.use(express.static('public'));
 
 //middlewares
+app.use(addLogger);
 app.use(express.json())
 app.use(urlencoded({extended:true}))
 app.use(cookieParser(process.env.JWT_SECRET))

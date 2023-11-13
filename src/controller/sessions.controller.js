@@ -5,6 +5,7 @@ import { LoginUserErrorInfo } from "../service/error/info.js"
 export const postLoginSession = async(req,res)=>{
     try{
         if(!req.user){
+            req.logger.warn("Usuario no registrado")
             customError.createError({
                 name: "User login error",
                 cause:LoginUserErrorInfo({email, password }),
