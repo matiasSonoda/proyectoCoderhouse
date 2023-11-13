@@ -39,7 +39,6 @@ app.use( "/",express.static(__dirname+"/public"))
 app.use(express.static('public'));
 
 //middlewares
-app.use(addLogger);
 app.use(express.json())
 app.use(urlencoded({extended:true}))
 app.use(cookieParser(process.env.JWT_SECRET))
@@ -57,7 +56,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 //routes
 
-app.use("/", router)
+app.use("/", addLogger,router)
 app.use(errorHandler)
 //Cookies
 

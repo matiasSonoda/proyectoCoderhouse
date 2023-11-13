@@ -2,10 +2,12 @@ import { generateToken } from "../utils/jwt.js"
 import customError from "../service/error/customError.js"
 import EErrors from "../service/error/enums.js"
 import { LoginUserErrorInfo } from "../service/error/info.js"
+import { logger } from "../utils/logger.js"
+
 export const postLoginSession = async(req,res)=>{
     try{
         if(!req.user){
-            req.logger.warn("Usuario no registrado")
+            req.Logger.warn("Usuario no registrado IF")
             customError.createError({
                 name: "User login error",
                 cause:LoginUserErrorInfo({email, password }),
@@ -28,6 +30,7 @@ export const postLoginSession = async(req,res)=>{
 
    }
    catch(error){
+        req.Logger.warn("Usuario no registrado")
         res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})
    }
 }

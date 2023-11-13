@@ -2,7 +2,7 @@ import productModel from  "../models/products.model.js"
 import EErrors from "../service/error/enums.js";
 import customError from "../service/error/customError.js";
 import { productErrorInfo } from "../service/error/info.js";
-
+import { logger } from "../utils/logger.js";
 export const getProducts = async(req,res)=>{
     const { limit, page, sort, category, info } = req.query;
     const filter = category ? { category } : {};
@@ -11,8 +11,14 @@ export const getProducts = async(req,res)=>{
         page: parseInt(page),
         sort: { price: sort || "asc" }
     };
-
-    try {
+    try{
+         throw new Error("test error")
+    }
+    catch{
+        logger.error("error")
+        res.status(500).json({message: "error"})
+    }
+   /* try {
         const products = await productModel.paginate(filter, options);
         if(products){
         res.render("home", {
@@ -26,7 +32,7 @@ export const getProducts = async(req,res)=>{
         }
     } catch (error) {
         res.status(500).send({ error: `Error al obtener productos: ${error}` });
-    }
+    }*/
 }
 
 export const getProduct = async(req,res)=>{
@@ -45,7 +51,6 @@ export const getProduct = async(req,res)=>{
 }
 export const postProduct = async(req,res)=>{
     const { title, description, stock, code, price, category } = req.body;
-
     try {
         if (!title ||!price ||!code ||!category){
             customError.createError({
