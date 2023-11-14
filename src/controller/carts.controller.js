@@ -2,11 +2,13 @@ import cartsModel from "../models/carts.model.js";
 import productModel from "../models/products.model.js";
 import ticketModel from "../models/tickets.model.js";
 import { v4 as uuidv4 } from "uuid";
+import { logger } from "../utils/logger.js";
 export const getAllCarts = async(req,res)=>{
     try {
         const carts = await cartsModel.find();
         res.status(200).send(carts);
       } catch (error) {
+        logger.error(`[Error] getAllCarts: ${error.message} - Date ${new Date().toLocaleString()}`)
         res.status(400).send({ error: `error al consultar los carritos: ${error}` });
       }
 }
@@ -21,6 +23,7 @@ export const getSpecificCart = async(req,res)=>{
       res.status(404).send(`No se encontro el carrito ${carts}`);
     }
   } catch (error) {
+    logger.error(`[Error] getSpecificCart ${error.message} - Date: ${new Date().toLocaleString()}`)
     res.status(400).send({ error: `error al consultar carrito: ${error}` });
   }
 }
@@ -36,6 +39,7 @@ export const postProductInCart = async(req,res)=>{
       res.status(200).send({ respuesta: "OK", mensaje: respuesta });
     }
   } catch (error) {
+    logger.error(`[Error] postProductInCart ${error.message} - Date ${new Date().toLocaleString()}`)
     res.status(400).send("Error: ", error);
   }
 }
@@ -52,6 +56,7 @@ export const deleteSpecificCart = async(req,res)=>{
       res.status(404).send(`No se encontro el carrito ${cid}`);
     }
   } catch (error) {
+    logger.error(`[Error] deleteSpecificCart ${error.message} - Date ${new Date().toLocaleString()}`)
     res.status(400).send({ error: `error al consultar carrito: ${error}` });
   }
 }
@@ -76,6 +81,7 @@ export const deleteProductOfCart = async(req,res)=>{
       res.status(404).send(`No se encontro el carrito ${cid}`);
     }
   } catch (error) {
+    logger.error(`[Error] deleteProductOfCart ${error.message} - Date ${new Date().toLocaleString()}`)
     res.status(400).send("error", error);
   }
 }
@@ -106,6 +112,7 @@ export const putSpecificCart = async(req,res)=>{
         res.status(404).send(`No se encontró el carrito: ${cid}`);
       }
     } catch (error) {
+      logger.error(`[Error] putSpecificCart ${error.message} - Date ${new Date().toLocaleString()}`)
       res.status(400).send(`Error: ${error}`);
     }
 }
@@ -128,6 +135,7 @@ export const putQuantityProductOfCart = async(req,res)=>{
     cart.save();
     res.status(200).send(`Se actualizo el producto: ${pid}`);
   } catch (error) {
+    logger.error(`[Error] putQuantityPorductOfCart ${error.message} - Date ${new Date().toLocaleString()}`)
     res.status(400).send(`Error: ${error}`);
   }
 }
@@ -136,6 +144,7 @@ export const postBuyCart = async (req, res) => {
     const {cid} = req.params
     const {email} = req.user.user
     const cartID = req.user.user.cart
+    try{
     const cart = await cartsModel.findById(cid)
     if (cart._id.toString() === cartID)
     {
@@ -172,5 +181,10 @@ export const postBuyCart = async (req, res) => {
       return res.status(404).send('Carrito no encontrado');
     }
   }
+}
+catch(error){
+  logger.error(`[Error] postBuyCart ${error.message} - Date ${new Date().toLocaleString()}`)
+  res.status(400).send(`Error: ${error}`);
+}
 }
 
