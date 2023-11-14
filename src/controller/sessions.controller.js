@@ -30,7 +30,7 @@ export const postLoginSession = async(req,res)=>{
 
    }
    catch(error){
-        req.Logger.warn("Usuario no registrado")
+        logger.error(`[Error] postLoginSession ${error.message} - Date ${new Date().toLocaleString()}`)
         res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})
    }
 }
