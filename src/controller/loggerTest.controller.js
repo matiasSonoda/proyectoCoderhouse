@@ -1,37 +1,27 @@
 import { logger } from "../utils/logger.js"
 
 
-export const getFatal = async(req,res) => {
-    const fatal = await logger.fatal(`[FATAL] soy logger fatal ${logger.fatal.message} - Date ${new Date().toLocaleString()}`)
-    res.status(500).send(fatal.message)
+export const getFatal = (req,res) => {
+    const message =  logger.fatal(`[FATAL] soy logger fata - Date ${new Date().toLocaleString()}`, logger.fatal(message))
+    res.status(500).send(message)
 } 
 
-export const getError = async(req,res) => {
-    const error = await logger.error(`[ERROR] soy logger error ${logger.error.message} - Date ${new Date().toLocaleString()}`)
-    res.status(400).send(error.message)
+export const getError = (req,res) => {
+    const message =  logger.error(`[ERROR] soy logger error  - Date ${new Date().toLocaleString()}`, logger.error(message))
+    res.status(400).send(message)
 }
 
-export const getWarning = async(req,res) => {
-    const warning = await logger.warning(`[ERROR] soy logger warning ${logger.warning.message} - Date ${new Date().toLocaleString()}`)
-    res.status(400).send(warning.message)
+export const getWarning = (req,res) => {
+    const message =  logger.warning(`[ERROR] soy logger warning  - Date ${new Date().toLocaleString()}`. logger.warning(message))
+    res.status(400).send(message)
 }
 
-export const getInfo = async(req,res) => {
-    const info = await logger.info(`[INFO] soy logger info ${logger.info.message} - Date ${new Date().toLocaleString()}`)
-    res.status(200).send(info.message)
+export const getInfo = (req,res) => {
+    const message =  logger.info(`[INFO] soy logger info - Date ${new Date().toLocaleString()}`, logger.info(message))
+    res.status(200).send(message)
 }
 
-export const getDebug = async(req, res) => {
-    const debug = await logger.debug(`[DEBUG] soy logger debug ${logger.debug.message} - Date ${new Date().toLocaleString()}`)
-    res.status(200).send(debug.message)
+export const getDebug = (req, res) => {
+    const message =  logger.debug(`[DEBUG] soy logger debug - Date ${new Date().toLocaleString()}`, logger.debug(message))
+    res.status(200).send(message)
 }
-/*const customLevels={
-    levels: {
-        fatal: 0,
-        error: 1,
-        warning: 2,
-        info: 3,
-        debug: 4
-    }*/
-
-    //logger por cada level que tenes declarado, con un mensaje , ej: logger.error(`[ERROR] - soy un log de error. `) ; ) 

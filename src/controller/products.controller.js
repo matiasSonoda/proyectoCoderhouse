@@ -2,7 +2,7 @@ import productModel from  "../models/products.model.js"
 import EErrors from "../service/error/enums.js";
 import customError from "../service/error/customError.js";
 import { productErrorInfo } from "../service/error/info.js";
-import { logger } from "../utils/logger.js";
+import { logger, loggerError } from "../utils/logger.js";
 export const getProducts = async(req,res)=>{
     const { limit, page, sort, category, info } = req.query;
     const filter = category ? { category } : {};
@@ -24,7 +24,7 @@ export const getProducts = async(req,res)=>{
             res.status(404).send({error:`Productos no encontrados`})
         }
     } catch (error) {
-        logger.error(`[Error] getProducts ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error);
         res.status(500).send({ error: `Error al obtener productos: ${error}` });
     }
 }
@@ -40,7 +40,7 @@ export const getProduct = async(req,res)=>{
         res.status(404).send({error: "producto no encontrado"})
     }
     catch(error){
-        logger.error(`[Error] getProduct ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error);
         res.status(500).send({error:`Error en consultar producto ${error}`})
     }
 }
@@ -58,7 +58,7 @@ export const postProduct = async(req,res)=>{
         const newProduct = await productModel.create({ title, description, stock, code, price, category });
         res.status(200).send({ resultado: "Ok", message: newProduct });
     } catch (error) {
-        logger.error(`[Error] postProduct ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error);
         res.status(400).send({ error: `Error al crear producto: ${error}` });
     }
 }
@@ -75,7 +75,7 @@ export const putProduct = async(req,res)=>{
             res.status(404).send({ resultado: "not found", message: updatedProduct });
         }
     } catch (error) {
-        logger.error(`[Error] putProduct ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error)
         res.status(400).send({ error: `Error al actualizar producto: ${error}` });
     }
 }
@@ -90,7 +90,7 @@ export const deleteProduct= async(req,res)=>{
             res.status(404).send({ resultado: "not found", message: deletedProduct });
         }
     } catch (error) {
-        logger.error(`[Error] putProduct ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error);
         res.status(400).send({ error:`Error al borrar producto: ${error}` });
     }
 }

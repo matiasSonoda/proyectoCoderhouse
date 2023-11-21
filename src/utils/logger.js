@@ -38,3 +38,8 @@ export const addLogger = (req,res,next) =>{
     next();
 }
 
+export const loggerError = (message) => {
+    logger.error(`[Error] putProduct  - Date ${new Date().toLocaleString()}`, logger.error(message))
+
+}
+

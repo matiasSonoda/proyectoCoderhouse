@@ -2,7 +2,7 @@ import { generateToken } from "../utils/jwt.js"
 import customError from "../service/error/customError.js"
 import EErrors from "../service/error/enums.js"
 import { LoginUserErrorInfo } from "../service/error/info.js"
-import { logger } from "../utils/logger.js"
+import { logger, loggerError } from "../utils/logger.js"
 
 export const postLoginSession = async(req,res)=>{
     try{
@@ -30,7 +30,7 @@ export const postLoginSession = async(req,res)=>{
 
    }
    catch(error){
-        logger.error(`[Error] postLoginSession ${error.message} - Date ${new Date().toLocaleString()}`)
+        loggerError(error);
         res.status(500).send({mensaje:`error al iniciar sesion: ${error}`})
    }
 }
