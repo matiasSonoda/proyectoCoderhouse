@@ -11,7 +11,7 @@ import passport from "passport";
 import initializePassport from "./config/passport.js";
 import router from "./routes/index.routes.js";
 import errorHandler from "./middlewares/errors/index.js"
-import { addLogger, logger } from "./utils/logger.js";
+import { addLogger, logger, loggerError } from "./utils/logger.js";
 const app= express()
 const PORT= 4000;
 
@@ -20,6 +20,7 @@ mongoose.connect(process.env.MONGO_URL)
     logger.info("DB conectada")
 })
 .catch((error)=>{
+    loggerError(error)
     logger.error(error)
 })
 //Handlebars
