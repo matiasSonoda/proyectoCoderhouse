@@ -12,6 +12,9 @@ import initializePassport from "./config/passport.js";
 import router from "./routes/index.routes.js";
 import errorHandler from "./middlewares/errors/index.js"
 import { addLogger, logger, loggerError } from "./utils/logger.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
+
 const app= express()
 const PORT= 4000;
 
@@ -67,6 +70,21 @@ app.get("/getcookie",(req,res)=>{
     res.send(req.signedCookies)
     res.send(req.cookies)
 })
+
+const swaggerOptions = {
+    definition: {
+        openapi: "3.1.0",
+        info: {
+            title: "Documentacio ndel curso de Backend",
+            description: "API Coderhouse Backend"
+        }
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`]
+
+}
+
+const specs = swaggerJSDoc(swaggerOptions)
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs))
 
 //server
 
