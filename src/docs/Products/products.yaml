@@ -7,5 +7,133 @@ paths:
       responses:
         "200":
           description: Productos obtenidos satisfactoriamente
+          content: 
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Products"
         "500":
           description: Error interno del servidor al optener productos
+
+  /api/products/{id}:
+    get:
+      summary: Obtener un solo producto
+      tags:
+        - Products
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id del producto a buscar
+      responses:
+        "200":
+          description: Producto obtenido satisfactoriamente
+          content: 
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Products"
+        "500":
+          description: Error interno del servidor al optener producto
+  /api/products/{pid}:
+    delete:
+      summary: Eliminar un solo producto
+      tags:
+        - Products
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id del producto a eliminar
+      responses:
+        "200":
+          description: El producto se elimino satisfactoriamente
+          content: 
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Products"
+        "500":
+          description: Error interno del servidor al eliminar producto
+  /api/products/{Aid}:
+    put:
+      summary: actualiza un solo producto
+      tags:
+        - Products
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Id del producto a actualizar
+      responses:
+        "200":
+          description: El producto se actualizo satisfactoriamente
+          content: 
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Products"
+        "500":
+          description: Error interno del servidor al actualizar producto
+  /api/products/{Oid}:
+      post:
+        summary: Crear un solo producto
+        tags:
+          - Products
+        parameters:
+        responses:
+          "200":
+            description: El producto se creo satisfactoriamente
+            content: 
+              application/json:
+                schema:
+                  items:
+                    $ref: "#/components/schemas/Products"
+          "500":
+            description: Error interno del servidor al crear producto
+components:
+  schemas:
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de MongoDb
+        title:
+          type: string
+          description: Nombre del producto
+        description:
+          type: string
+          description: Especificaciones del producto
+        price:
+          type: number
+          description: Precio del producto
+        stock:
+          type: number
+          description: cantidad disponible del producto
+        category:
+          type: string
+          description: gama de productos similares
+        status:
+          type: boolean
+          description: si esta disponible el producto
+        code: 
+          type: string
+          description: Identificador unico del producto
+
+      example:
+        _id: objectId("3sa4r3wqe4rfs3r4gh")
+        title: "ejemplo"
+        description: "esto es un ejemplo"
+        price: 9999
+        stock: 9999
+        category: "ejemplo"
+        status: true
+        code: aa454785
