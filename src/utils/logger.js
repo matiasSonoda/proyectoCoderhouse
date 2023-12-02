@@ -15,19 +15,26 @@ const customLevels={
         info: "blue",
         debug: "white"
       }
-}
+};
+
+winston.addColors(customLevels.colors);
 
 export const logger = winston.createLogger({
     levels: customLevels.levels,
-    format: winston.format.combine(
-      winston.format.colorize(),
-      winston.format.simple()
-    ),
-    transports: [
+    
+    transports:[
       new winston.transports.Console({
-        level: "info"
-      }),
-      new winston.transports.File({ filename: "./src/logs/errors.logs", level: "warn" })
+        level: "info",
+        format: winston.format.combine(
+          winston.format.colorize(),
+          winston.format.simple()
+        )
+      })
+      ,
+      new winston.transports.File({ 
+      filename: "./src/logs/errors.log",
+      level: "warning" 
+    })
     ]
   });
 
@@ -39,7 +46,7 @@ export const addLogger = (req,res,next) =>{
 }
 
 export const loggerError = (message) => {
-    logger.error(`[Error] putProduct  - Date ${new Date().toLocaleString()}`, logger.error(message))
+    logger.error(`[Error] - Date ${new Date().toLocaleString()} ${message}`)
 
 }
 
