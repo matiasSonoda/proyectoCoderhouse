@@ -1,5 +1,6 @@
 import { Schema,model } from "mongoose";    
 import cartsModel from "./carts.model.js";
+import  paginate  from "mongoose-paginate-v2";
 const usersSchema = new Schema({
     first_name:{
         require:true,
@@ -29,7 +30,12 @@ const usersSchema = new Schema({
     cart:{
         type: Schema.Types.ObjectId,
         ref:"carts"
-}})
+},
+    lastConnection: {
+        type: Date,
+        default: Date.now()
+    }
+})
 
 usersSchema.pre("save", async function(next){
         try{
@@ -41,6 +47,6 @@ usersSchema.pre("save", async function(next){
             next(error)
         }
 })
-
+usersSchema.plugin(paginate)
 const usersModel = model("users", usersSchema)
 export default usersModel

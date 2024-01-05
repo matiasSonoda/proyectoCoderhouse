@@ -1,0 +1,17 @@
+<main>
+    <h1>Carrito</h1>
+</main>
+<div>
+
+{{#each carts.products}}
+    <div>
+        <p>Title: {{this.id_prod.title}}</p>
+        <p>quantity: {{this.quantity}}</p>
+    </div>
+{{/each}}
+<div><p>Total price: {{this.totalPrice}}</p></div>
+    <div><form action="/api/carts/{{idCart}}/purchase" method="POST">
+        <button> Comprar </button>
+    </form></div>
+    
+</div>

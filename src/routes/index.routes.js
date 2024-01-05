@@ -16,5 +16,4 @@ router.use("/api/sessions", sessionsRouter)
 router.use("/api/users", usersRouter)
 router.use("/api/moking", mokingRoutes)
 router.use("/loggerTest", loggerRoutes)
-
 export default router

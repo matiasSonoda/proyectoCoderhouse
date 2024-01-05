@@ -3,6 +3,7 @@ import customError from "../service/error/customError.js"
 import EErrors from "../service/error/enums.js"
 import { LoginUserErrorInfo } from "../service/error/info.js"
 import { logger, loggerError } from "../utils/logger.js"
+import usersModel from "../models/users.model.js"
 
 export const postLoginSession = async(req,res)=>{
     try{
@@ -14,14 +15,16 @@ export const postLoginSession = async(req,res)=>{
                 message:"Error trying to login user",
                 code:EErrors.INVALID_TYPES_ERROR
             })
-            //res.status(401).send({mensaje: `invalidate user`})
+            res.status(401).send({mensaje: `invalidate user`})
         }
         req.session.user={
             first_name: req.user.first_name,
             last_name: req.user.last_name,
             age: req.user.age,
-            email: req.user.email
+            email: req.user.email,
+            cart: req.user.cart
         }
+        await usersModel.findByIdAndUpdate(req.user._id, {lastConnection: Date.now()})
         const token = generateToken(req.user)
         res.cookie("jwtCookie", token, {
             maxAge: 43200000

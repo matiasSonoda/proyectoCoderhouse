@@ -1,6 +1,5 @@
 import express, { urlencoded } from "express";
 import session from "express-session";
-import "dotenv/config" //Permite utilizar variables de entorno
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { engine } from "express-handlebars";
@@ -17,6 +16,8 @@ import swaggerUiExpress from "swagger-ui-express";
 
 const app= express()
 const PORT= 4000;
+
+
 
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{

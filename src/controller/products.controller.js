@@ -3,7 +3,10 @@ import EErrors from "../service/error/enums.js";
 import customError from "../service/error/customError.js";
 import { productErrorInfo } from "../service/error/info.js";
 import { logger, loggerError } from "../utils/logger.js";
+import cartsModel from "../models/carts.model.js";
 export const getProducts = async(req,res)=>{
+    const { user: { cart: cartId } = {} } = req.session;
+    console.log(cartId,"soy cart ID")
     const { limit, page, sort, category, info } = req.query;
     const filter = category ? { category } : {};
     const options = {
@@ -13,13 +16,14 @@ export const getProducts = async(req,res)=>{
     };
     try {
         const products = await productModel.paginate(filter, options);
-        if(products){
+        if(products){{
         res.render("home", {
             rutaCSS: "home",
             rutaJS: "home",
             info,
-            products: products.docs
-        });}
+            products: products.docs,
+            cartId: cartId
+        });}}
         else{
             res.status(404).send({error:`Productos no encontrados`})
         }

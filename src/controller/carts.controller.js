@@ -18,7 +18,17 @@ export const getSpecificCart = async(req,res)=>{
   try {
     const carts = await cartsModel.findById(cid).populate("products.id_prod");
     if (carts) {
-      res.status(200).send(carts);
+       // Calcula el precio total
+       let totalPrice = 0;
+       for (let product of carts.products) {
+           totalPrice += product.id_prod.price * product.quantity;
+       }
+      res.render("cart",{
+        rutaCSS: "cart",
+        carts: carts,
+        idCart: cid,
+        totalPrice: totalPrice
+      })
     } else {
       res.status(404).send(`No se encontro el carrito ${carts}`);
     }
@@ -34,13 +44,19 @@ export const postProductInCart = async(req,res)=>{
   try {
     const cart = await cartsModel.findById(cid);
     if (cart) {
+      const product = cart.products.find(p => p.id_prod === pid)
+      if (product){
+        product.quantity += quantity
+      }
+      else{
       cart.products.push({ id_prod: pid, quantity: quantity });
+      }
       const respuesta = await cartsModel.findByIdAndUpdate(cid, cart);
       res.status(200).send({ respuesta: "OK", mensaje: respuesta });
     }
   } catch (error) {
     loggerError(error);
-    res.status(400).send("Error: ", error);
+    res.status(400).send({error: error.message});
   }
 }
 

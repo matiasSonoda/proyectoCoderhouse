@@ -3,7 +3,11 @@
     <form action="/api/sessions/logout" method="POST">
         <button type="submit">Logout</button>
     </form>
+    <form action="/api/carts/{{cartId}}">
+        <button type="submit">Mi carrito</button>
+    </form>
 </main>
+<div>
 
 {{#each products}}
     <div>
@@ -14,5 +18,14 @@
         <p>status:{{this.status}}</p>
         <p>code:{{this.code}}</p>
         <p>stock:{{this.stock}}</p>
+        <div>
+            <form action="/api/carts/{{../cartId}}/products/{{this.id}}" method="POST">
+                <label for="quantity">Cantidad:</label>
+                <input type="number" id="quantity" name="quantity" min="1" max="{{this.stock}}" value="1">
+                <button type="submit" id="agregarCarrito">Agregar al carrito</button>
+            </form>
+        </div>
     </div>
 {{/each}}
+    
+</div>
